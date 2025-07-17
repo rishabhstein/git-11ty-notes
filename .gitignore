@@ -1,0 +1,5 @@
+# .gitignore
+node_modules/
+# .eleventy.js
+_site/
+.DS_Store

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="sigmarootpi">
+
+    <!-- Adding github for IndieAuth -->
+    <link rel="me" href="https://github.com/rishabhstein">
+    
+    <link rel="micropub" href="https://post.sigmarootpi.com/micropub">
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/style.css?v=3.0">
+
+    <!-- Fav and touch icons -->
+    <link rel="icon" type="image/png" href="/assets/logo.png">
+
+    <link rel="alternate" type="application/rss+xml" title="Rishabh's Blog Feed" href="/feed.xml" />
+
+</head>
+<body>
+    {% include 'header.njk' %}
+    <main>
+    {{ content | safe }}
+    </main>
+    <br><br><br><br>
+    {% include 'footer.njk' %}
+</body>
+</html>

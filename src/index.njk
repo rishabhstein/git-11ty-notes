@@ -1,0 +1,21 @@
+---
+title: Notebooks
+layout: 'base.njk'
+---
+
+<p align="justify">This is a collection of my notes—some people call it a Garden—that I felt are worth keeping to recall information whenever I need it as quickly as possible. The material in these notebooks is mostly of my interest without any intention of being useful for others. Of course, in one lifetime, I could be an expert in maybe nothing. So it may offend other experts, for which you have my sincere apology in advance.</p>
+
+<p align="justify">The topics are very diverse, ranging from myths, witches, and giants to philosophy and physics. In other words, whatever I found amusing, beautiful, strange, outrageous, weird, or otherwise noteworthy; things I want to learn and a list of references related to my research.</p>
+
+<p align="justify">The format of these notebooks is copied from <a href="http://bactra.org/notebooks/">Cosma Shalizi</a> and I am deeply grateful for him to come up with such a nice idea.</p>
+<hr>
+
+<ul>
+    {% for post in collections.post | reverse %}
+            <li>
+                <a href="{{ post.url }}">{{ post.data.title }}</a> 
+                <i>({{ post.inputPath | gitLastModified | postDateNotes }})</i>
+            </li>
+    {% endfor %}
+</ul>
+ 

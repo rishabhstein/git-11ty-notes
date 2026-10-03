@@ -1,7 +1,7 @@
 ---
 title: Peclet number
 cdate: 2024-09-04
-mdate: 2025-11-10T19:01
+mdate: 2026-10-03T17:52
 date: Last Modified
 tags:
   - physics

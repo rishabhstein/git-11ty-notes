@@ -1,7 +1,7 @@
 ---
 title: Thales of Miletus
 cdate: 2024-10-04
-mdate: 2025-11-10T19:01
+mdate: 2026-10-03T17:52
 date: Last Modified
 tags:
   - philosophy

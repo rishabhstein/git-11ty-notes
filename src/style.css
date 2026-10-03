@@ -562,13 +562,27 @@ code span.op {
 }
 
 @media (max-width: 1339px) {
+  /* One column: intro, Visit today, the notes, then Recently updated */
   .notebook-layout {
     display: flex;
     flex-direction: column;
   }
 
-  .recently-updated {
+  .notebook-intro {
+    order: 0;
+  }
+
+  .visit-today {
+    order: 1;
+  }
+
+  .notebook-main {
     order: 2;
+    margin-top: 1.5em;
+  }
+
+  .recently-updated {
+    order: 3;
     margin-top: 2em;
   }
 
@@ -577,6 +591,18 @@ code span.op {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 0.75em;
     align-items: start;
+  }
+}
+
+/* Phones: justified text leaves wide gaps, and cards stacked one per row
+   don't need the fixed height that keeps a grid of cards aligned */
+@media (max-width: 600px) {
+  .notebook-intro p {
+    text-align: left;
+  }
+
+  .notes-view .category:not(.wide) > ul {
+    height: auto;
   }
 }
 

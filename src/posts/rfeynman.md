@@ -1,7 +1,9 @@
 ---
-title: "Richard P. Feynman"
+title: Richard P. Feynman
 cdate: 2024-09-04
 date: Last Modified
+tags:
+  - physics
 ---
 
 Although he has a controversial life, especially according to activists,

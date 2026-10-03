@@ -23,15 +23,17 @@ Recommended:
 -   [Richard P. Feynman](./rfeynman/) *What Do You Care What Other
     People Think?\": Further Adventures of a Curious Character*
 -   Elizabeth Gilbert, *Eat, Pray, Love*
--   A.P.J. Abdul Kalam, *Wings of Fire: An Autobiography*
+-   A. P. J. Abdul Kalam, *Wings of Fire: An Autobiography*
 -   M.K. Gandhi, *My Experiments With Truth*
 -   Jon Krakauer,
     -   *Into Thin Air: A Personal Account of the Mt. Everest Disaster*
-    -   *Into the Wild: Christopher Johnson McCandless*
+	-   *Into the Wild: Christopher Johnson McCandless*
+- Alexander Frater, *Chasing the Monsoon: A Modern Pilgrimage Through India*,
+
 
 To read:
 
--   Nimsdai Purja, *Beyond Possible: One Soldier, Fourteen Peaks --- My
+-   Nimsdai Purja, *Beyond Possible: One Soldier, Fourteen Peaks—My
     Life In The Death Zone*
 -   Sylvia Nasar, *A Beautiful Mind*
 -   Dava Sobel, *Galileo's Daughter: A Historical Memoir of Science,

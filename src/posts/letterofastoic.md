@@ -10,7 +10,7 @@ My notes from the book: mostly Senneca's own lines or quotations of someone he q
 
 > I am acting on behalf of later generations. I am writing down a few things that may be of use to them; I a no m commiting to write down some helpful recommendations, which might be compared to the formulae of successful medications. 
 
-> Avoid whatever is approved of by the mob, and things that arenthe gift of chance.
+> Avoid whatever is approved of by the mob, and things that are the gift of chance.
 
 > To win true freedom you must be a slave to philosophy. [Epicurus]
 

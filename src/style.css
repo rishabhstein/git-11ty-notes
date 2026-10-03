@@ -104,11 +104,12 @@ header {
 /* Page title and nav links, centred and grouped together */
 .site-header {
   text-align: center;
-  padding-bottom: 0.75em;
+  padding-bottom: 0.3em;
 }
 
 .site-name {
-  margin: 1em 0 0.35em;
+  margin: 0.75em 0 0.1em;
+  line-height: 1.3;
 }
 
 .site-title {

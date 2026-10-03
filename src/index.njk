@@ -17,6 +17,35 @@ layout: 'base.njk'
     </li>
     {% endfor %}
 </ul>
+<a class="surprise-me" href="/">Surprise me &rarr;</a>
+</div>
+</aside>
+
+{# The latest changed notes as picture cards, mirroring "Visit today" #}
+<aside class="recently-updated">
+<div class="recently-updated-inner">
+<h2>Recently updated</h2>
+<ul>
+    {% set recent = [] %}
+    {% for post in collections.notes %}{% if not post.inputPath.endsWith("/index.md") and recent.length < 5 %}{% set recent = (recent.push(post), recent) %}{% endif %}{% endfor %}
+    {% for post in recent %}
+    {% set cardImage = post.data.image | infoboxImage %}
+    <li class="recent-card{% if not cardImage %} no-image{% endif %}">
+        {% if cardImage %}<a href="{{ post.url }}" tabindex="-1" aria-hidden="true"><img src="{{ cardImage }}" alt="" loading="lazy"></a>{% endif %}
+        <div class="recent-card-body">
+            <a class="recent-card-title" href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a>
+            <time>{{ post.data | lastModified | shortDate }}</time>
+            {% if post.data.info %}
+            <dl>
+                {% for row in post.data.info | infoboxRows %}{% if loop.index <= 2 %}
+                {% if row.label %}<dt>{{ row.label }}</dt>{% endif %}<dd>{{ row.value | inlineMarkdown | safe }}</dd>
+                {% endif %}{% endfor %}
+            </dl>
+            {% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>
 </div>
 </aside>
 
@@ -104,6 +133,16 @@ layout: 'base.njk'
     for (var i = 0; i < perDay; i++) {
       items[n - 1 - ((day * perDay + i) % n)].hidden = false;
     }
+  })();
+
+  // "Surprise me": open a random note
+  (function () {
+    var link = document.querySelector(".surprise-me");
+    var notes = document.querySelectorAll(".visit-today li > a");
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      location.href = notes[Math.floor(Math.random() * notes.length)].href;
+    });
   })();
 
   // Switch between the category view and the full list; remember the choice.

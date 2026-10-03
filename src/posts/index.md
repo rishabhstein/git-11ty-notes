@@ -1,7 +1,7 @@
 ---
 title: Index
 cdate: 2025-09-20
-mdate: 2026-10-03T16:53
+mdate: 2026-10-03T21:42
 date: Last Modified
 ---
 An attempt to categorise my notebooks
@@ -91,13 +91,14 @@ An attempt to categorise my notebooks
 - [[nerd|Nerd]]
 - [[book|Books]]
 - [[fictionbooks|Fiction books]]
-
-## Writing
 - [[writing-guide|Writing a research statement]]
 - [[writingcritism|Writing criticism]]
 - [[Grammar notes|English grammar notes]]
+  
+## Self-host/Code
 - [[webserver|Webserver]]
 - [[blog|Blog]]
+- [[localDNS|localDNS]]
 
 ## Stories
 - Ramayana

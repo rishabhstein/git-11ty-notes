@@ -33,6 +33,6 @@ Not Recommended:
 
 To read:
 
--   Gregory Hays, *[Meditations](./meditations_bymarcus/) by Marcus
+-   Gregory Hays, *[Meditations](meditations-by-marcus.md) by Marcus
     Aurealius*
 -   Carol S. Dweck, *Mindset: The New Psychology of Success*

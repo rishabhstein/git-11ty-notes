@@ -6,7 +6,7 @@
 //     is styled like the footnote section, and [1](#1) or ^[[1](#1)] citations
 //     become superscripts
 //   - other label lines such as "See also:" become small subheadings
-const LABEL = /^(references|recommended|sources|bibliography|see also|further reading)\s*:?\s*$/i;
+const LABEL = /^(references|recommended|sources|bibliography|see also|further reading)(\s*\([^)]*\))?\s*:?\s*$/i;
 const REFERENCE_LABEL = /^(references|sources|bibliography)\b/i;
 
 function noteReferences(md) {
@@ -68,7 +68,7 @@ function noteReferences(md) {
 
   md.renderer.rules.footnote_block_open = (tokens, idx) => {
     const label = (tokens[idx].meta && tokens[idx].meta.label) || "References";
-    return `<section class="footnotes">\n<h2 class="footnotes-title">${md.utils.escapeHtml(label)}</h2>\n<ol class="footnotes-list">\n`;
+    return `<section class="footnotes">\n<h2 class="footnotes-title" id="references-list" data-toc="refs">${md.utils.escapeHtml(label)}</h2>\n<ol class="footnotes-list">\n`;
   };
 }
 

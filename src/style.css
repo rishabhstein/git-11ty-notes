@@ -659,6 +659,12 @@ code span.op {
   margin: 1.25em 0 0.4em;
 }
 
+.note-body h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 1.25em 0 0.3em;
+}
+
 .note-body img,
 .note-body video {
   max-width: 100%;
@@ -854,6 +860,99 @@ a.cite-ref {
 
 .footnote-backref:hover {
   color: var(--color-link);
+}
+
+/* Contents list. On wide screens it hangs off the left edge of the centred
+   column, mirroring the infobox on the right; otherwise it is a small
+   collapsible box above the text. */
+.toc {
+  font-size: var(--font-size-small);
+}
+
+.toc summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.toc ol {
+  list-style: none;
+  margin: 0.5em 0 0;
+  padding: 0;
+}
+
+.toc li {
+  margin: 0;
+}
+
+.toc a {
+  display: block;
+  padding: 0.2em 0 0.2em 0.75em;
+  border-left: 2px solid transparent;
+  color: var(--color-code-gray-dark);
+  line-height: 1.4;
+}
+
+.toc a:hover {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.toc a.active {
+  color: var(--color-text);
+  border-left-color: var(--color-link);
+}
+
+.toc .toc-depth-1 a {
+  padding-left: 1.5em;
+}
+
+.toc .toc-depth-2 a {
+  padding-left: 2.25em;
+}
+
+@media (min-width: 1340px) {
+  .toc {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    width: 200px;
+    margin-right: 40px;
+  }
+
+  .toc-inner {
+    position: sticky;
+    top: 1em;
+    max-height: calc(100vh - 2em);
+    overflow-y: auto;
+  }
+
+  .toc summary {
+    list-style: none;
+    pointer-events: none;
+    margin-bottom: 0.25em;
+  }
+
+  .toc summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@media (max-width: 1339px) {
+  .toc-inner {
+    display: inline-block;
+    min-width: 12em;
+    margin: 0 0 1em;
+    padding: 0.5em 0.9em;
+    border: 1px solid #dddad3;
+    border-radius: 6px;
+    background-color: #ffffff;
+  }
+}
+
+/* Jumping to a section leaves a little room above it */
+.note-body [id] {
+  scroll-margin-top: 1em;
 }
 
 /* Infobox (image and facts from frontmatter). On wide screens it hangs off the

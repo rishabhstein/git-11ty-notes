@@ -4,6 +4,7 @@ const { indexVault, obsidianLinks } = require("./src/utils/obsidian-links");
 const markdownItFootnote = require("markdown-it-footnote");
 const markdownItMark = require("markdown-it-mark");
 const { noteReferences } = require("./src/utils/note-references");
+const { headingIds, tableOfContents } = require("./src/utils/table-of-contents");
 
 
 module.exports = async function(eleventyConfig) {
@@ -28,7 +29,7 @@ module.exports = async function(eleventyConfig) {
   eleventyConfig.amendLibrary("md", (md) => {
     md.set({ linkify: true });
     md.linkify.set({ fuzzyLink: false });
-    md.use(katex).use(markdownItFootnote).use(markdownItMark).use(noteReferences);
+    md.use(katex).use(markdownItFootnote).use(markdownItMark).use(noteReferences).use(headingIds);
     // Footnote markers as plain numbers ("1", "2:1") instead of "[1]"
     md.renderer.rules.footnote_caption = (tokens, idx) => {
       const { id, subId } = tokens[idx].meta;
@@ -69,6 +70,9 @@ module.exports = async function(eleventyConfig) {
         : { label: "", value: text.trim() };
     })
   );
+  // "Contents" list on note pages, from the headings in the rendered note
+  eleventyConfig.addFilter("tableOfContents", tableOfContents);
+
   eleventyConfig.addFilter("inlineMarkdown", function (text) {
     return markdownLib.renderInline(String(text), { page: this.page });
   });

@@ -4,11 +4,25 @@
 
 
 <article class="note" data-pagefind-body>
-<h1 class="note-title">{{ title or page.fileSlug }}</h1>
+<h1 class="note-title" id="top">{{ title or page.fileSlug }}</h1>
 <p class="note-meta">
     {% if cdate %}<span>Posted {{ cdate | shortDate }}</span>{% endif %}
     {% if mdate %}<span>Modified {{ mdate | postDateNotes }}</span>{% endif %}
 </p>
+{% set toc = content | tableOfContents %}
+{% if toc.length %}
+<nav class="toc" aria-label="Contents">
+<details class="toc-inner">
+    <summary>Contents</summary>
+    <ol>
+        <li class="toc-depth-0"><a href="#top">(Top)</a></li>
+        {% for item in toc %}
+        <li class="toc-depth-{{ item.depth }}"><a href="#{{ item.id }}">{{ item.text }}</a></li>
+        {% endfor %}
+    </ol>
+</details>
+</nav>
+{% endif %}
 {% set infoImage = image | infoboxImage %}
 {% if infoImage or info %}
 <aside class="infobox">
@@ -42,3 +56,28 @@
     <a href='mailto:sigmarootpi@proton.me?subject=Blogentry: {{ title }}'>Reply via email</a>
 </footer>
 </article>
+
+{% if toc.length %}
+<script>
+  // Contents: always open beside the text on wide screens, collapsed above it
+  // otherwise; highlight the section currently being read
+  (function () {
+    var details = document.querySelector(".toc-inner");
+    var wide = window.matchMedia("(min-width: 1340px)");
+    function sync() { details.open = wide.matches; }
+    sync();
+    wide.addEventListener("change", sync);
+
+    var links = {};
+    document.querySelectorAll(".toc a").forEach(function (a) { links[a.hash.slice(1)] = a; });
+    var targets = Object.keys(links).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    function update() {
+      var current = targets[0];
+      targets.forEach(function (t) { if (t.getBoundingClientRect().top < 120) current = t; });
+      Object.keys(links).forEach(function (id) { links[id].classList.toggle("active", current && id === current.id); });
+    }
+    document.addEventListener("scroll", update, { passive: true });
+    update();
+  })();
+</script>
+{% endif %}

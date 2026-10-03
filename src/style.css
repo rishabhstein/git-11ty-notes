@@ -662,6 +662,8 @@ code span.op {
 .note-body img,
 .note-body video {
   max-width: 100%;
+  max-height: 80vh;
+  width: auto;
   height: auto;
 }
 
@@ -881,10 +883,15 @@ a.cite-ref {
   margin: 0 0 0.6em;
 }
 
+/* Any image size: keeps its aspect ratio, never wider than the card, never
+   taller than 320px (or 45% of the screen), and never enlarged past its own size */
 .infobox img {
   display: block;
-  width: 100%;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: min(320px, 45vh);
+  margin: 0 auto;
   border-radius: 4px;
 }
 
@@ -957,12 +964,6 @@ a.cite-ref {
     margin-bottom: 1em;
   }
 
-  .infobox img {
-    max-height: 45vh;
-    width: auto;
-    max-width: 100%;
-    margin: 0 auto;
-  }
 }
 
 .note-footer {

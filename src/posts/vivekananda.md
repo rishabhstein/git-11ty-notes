@@ -1,6 +1,7 @@
 ---
 title: "Swami Vivekananda"
 cdate: 2024-09-04
+mdate: 2025-10-15T19:48
 date: Last Modified
 ---
 

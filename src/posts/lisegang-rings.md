@@ -1,6 +1,7 @@
 ---
 title: lisegang-rings
 cdate: 2025-12-13
+mdate: 2025-12-28T16:46
 date: Last Modified
 tags:
   - pattern-formation

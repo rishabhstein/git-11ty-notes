@@ -1,6 +1,7 @@
 ---
 title: "Parmenides"
 cdate: 2024-10-04
+mdate: 2025-10-29T15:49
 date: Last Modified
 ---
 

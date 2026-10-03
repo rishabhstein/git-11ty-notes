@@ -1,6 +1,7 @@
 ---
 title: Armchair travel
 cdate: 2025-10-26
+mdate: 2025-10-29T15:49
 date: Last Modified
 ---
 A term describing travel without actually travelling, i.e. sitting at home. In ancient times armchair travel can be done either by reading or listening to stories. Nowadays one can watch a movie or youtube videos to do it. Oddly enough, I like reading about travels more than actually travelling. So I am a passionate armchair traveller.

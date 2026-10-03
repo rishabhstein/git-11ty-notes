@@ -1,6 +1,7 @@
 ---
 title: "Kierkegaard"
 cdate: 2025-01-19
+mdate: 2025-09-20T12:56
 date: Last Modified
 ---
 

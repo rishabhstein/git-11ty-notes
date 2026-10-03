@@ -1,6 +1,7 @@
 ---
 title: "Letter of a Stoic"
 cdate: 2025-06-12
+mdate: 2025-10-29T15:49
 date: Last Modified
 ---
 

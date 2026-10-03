@@ -1,6 +1,7 @@
 ---
 title: Physical models
 cdate: 2025-11-18
+mdate: 2025-12-28T16:46
 date: Last Modified
 tags:
   - physics

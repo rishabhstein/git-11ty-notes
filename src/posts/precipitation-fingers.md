@@ -1,6 +1,7 @@
 ---
 title: Reaction Precipitation fingers
 cdate: 2025-10-25
+mdate: 2026-01-02T12:54
 date: Last Modified
 tags:
   - pattern-formation

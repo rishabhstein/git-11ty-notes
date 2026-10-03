@@ -1,6 +1,7 @@
 ---
 title: Charvaka
 cdate: 2025-01-31
+mdate: 2025-11-10T19:01
 date: Last Modified
 tags:
   - philosophy

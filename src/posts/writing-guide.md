@@ -1,6 +1,7 @@
 ---
 title: Guidance to write a good research statemetn
 cdate: 2026-05-30
+mdate: 2026-05-30T15:35
 date: Last Modified
 ---
 **Reddit advices:**

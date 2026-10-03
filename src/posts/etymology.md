@@ -1,6 +1,7 @@
 ---
 title: Etymology
 cdate: 2025-09-20
+mdate: 2025-09-30T12:51
 date: Last Modified
 tags:
 ---

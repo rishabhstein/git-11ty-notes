@@ -1,6 +1,7 @@
 ---
 title: Hydrostatics
 cdate: 2025-10-01
+mdate: 2025-11-10T19:01
 date: Last Modified
 tags:
   - physics

@@ -1,6 +1,7 @@
 ---
 title: Plasma patterns
 cdate: 2025-11-11
+mdate: 2025-11-13T12:48
 date: Last Modified
 tags:
   - pattern-formation

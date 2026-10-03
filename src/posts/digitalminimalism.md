@@ -1,6 +1,7 @@
 ---
 title: Digital Minimalism
 cdate: 2024-09-04
+mdate: 2025-12-07T12:57
 date: Last Modified
 tags:
   - philosophy

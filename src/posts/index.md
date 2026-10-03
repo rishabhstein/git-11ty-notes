@@ -1,6 +1,7 @@
 ---
 title: Index
 cdate: 2025-09-20
+mdate: 2025-12-30T14:04
 date: Last Modified
 ---
 An attempt to categorise my notebooks

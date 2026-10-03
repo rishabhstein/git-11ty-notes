@@ -1,6 +1,7 @@
 ---
 title: Ibn Batuta
 cdate: 2025-09-21
+mdate: 2025-10-15T19:48
 date: Last Modified
 ---
 I heard his name first in a Bollywood song without knowing that its a real person. The second encounter was in a book, *Chasing the monsoon* by *Alexander Frater*.

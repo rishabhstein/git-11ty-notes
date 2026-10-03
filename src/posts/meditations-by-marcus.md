@@ -1,6 +1,7 @@
 ---
 title: "Meditations: Marcus Aurelius"
 cdate: 2024-09-04
+mdate: 2025-10-29T15:49
 date: Last Modified
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Pattern formation
 cdate: 2025-10-25
+mdate: 2025-12-28T16:46
 date: Last Modified
 tags:
   - physics

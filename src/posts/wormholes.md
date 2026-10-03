@@ -1,6 +1,7 @@
 ---
 title: "Dissolution patterns"
 cdate: 2024-09-07
+mdate: 2025-06-14T14:21
 date: Last Modified
 ---
 

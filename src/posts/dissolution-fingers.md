@@ -1,6 +1,7 @@
 ---
 title: Dissolution patterns
 cdate: 2024-09-07
+mdate: 2025-11-10T19:01
 date: Last Modified
 tags:
   - pattern-formation

@@ -1,6 +1,7 @@
 ---
 title: Mathematical Tricks
 cdate: 2026-01-05
+mdate: 2026-01-05T10:56
 date: Last Modified
 tags:
 ---

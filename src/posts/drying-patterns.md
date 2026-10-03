@@ -1,6 +1,7 @@
 ---
 title: Drying patterns
 cdate: 2025-11-10
+mdate: 2026-01-02T12:54
 date: Last Modified
 ---
  - Pamela's experiment of drying gel shown a variety of patterns.

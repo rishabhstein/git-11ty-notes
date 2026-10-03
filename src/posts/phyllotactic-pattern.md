@@ -1,6 +1,7 @@
 ---
 title: Phyllotactic patterns
 cdate: 2025-10-23
+mdate: 2026-01-02T12:54
 date: Last Modified
 tags:
   - physics

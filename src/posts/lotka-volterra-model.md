@@ -1,6 +1,7 @@
 ---
 title: Lotka Volterra model
 cdate: 2025-11-18
+mdate: 2025-11-20T10:16
 date: Last Modified
 tags:
   - physics

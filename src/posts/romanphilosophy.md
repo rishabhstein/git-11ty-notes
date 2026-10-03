@@ -1,6 +1,7 @@
 ---
 title: Philosophers
 cdate: 2024-10-13
+mdate: 2025-10-15T19:48
 date: Last Modified
 ---
 

@@ -19,8 +19,7 @@
   },
   "dependencies": {
     "@11ty/eleventy-plugin-rss": "2.0.4",
-    "lunr": "2.3.9",
-    "simple-git": "3.36.0"
+    "lunr": "2.3.9"
   },
   "keywords": [],
   "overrides": {

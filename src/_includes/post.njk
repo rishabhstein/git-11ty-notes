@@ -4,7 +4,7 @@
 
 
 <article data-pagefind-body>
-<span>Modified at: {{ page.inputPath | gitLastModified | postDate }}</span><br>
+{% if mdate %}<span>Modified at: {{ mdate | postDateNotes }}</span><br>{% endif %}
 
 <div>
         <main>

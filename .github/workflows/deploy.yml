@@ -26,9 +26,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
-        with:
-          # Full history so git-date.js can read each post's last-modified date
-          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v7

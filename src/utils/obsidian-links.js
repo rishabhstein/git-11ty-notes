@@ -133,8 +133,10 @@ function obsidianLinks(md, { notes, attachments }) {
 
   md.core.ruler.push("obsidian_md_links", (state) => {
     for (const block of state.tokens) {
-      let unlinking = false;
-      for (const token of block.children || []) {
+      const children = block.children || [];
+      let unlinkedFrom = -1;
+      for (let j = 0; j < children.length; j++) {
+        const token = children[j];
         if (token.type === "link_open") {
           const href = token.attrGet("href");
           const resolved = resolveHref(href);
@@ -142,11 +144,21 @@ function obsidianLinks(md, { notes, attachments }) {
           else if (resolved && resolved.missing) {
             warn(state.env, `unresolved link (${href})`);
             unlink(token);
-            unlinking = true;
+            unlinkedFrom = j;
           }
-        } else if (token.type === "link_close" && unlinking) {
+        } else if (token.type === "link_close" && unlinkedFrom >= 0) {
           unlink(token);
-          unlinking = false;
+          // A bare "Link" to an unpublished note (e.g. a Zotero literature note in a
+          // reference) means nothing as plain text, so drop it and its separator
+          const label = children.slice(unlinkedFrom + 1, j);
+          if (label.length === 1 && label[0].type === "text" && /^link$/i.test(label[0].content.trim())) {
+            label[0].content = "";
+            const next = children[j + 1];
+            const prev = children[unlinkedFrom - 1];
+            if (next && next.type === "text" && next.content.trim()) next.content = next.content.replace(/^\s*,\s*/, "");
+            else if (prev && prev.type === "text") prev.content = prev.content.replace(/,\s*$/, "");
+          }
+          unlinkedFrom = -1;
         } else if (token.type === "image") {
           const src = token.attrGet("src");
           if (!src || /^([a-z][a-z0-9+.-]*:|\/)/i.test(src)) continue;

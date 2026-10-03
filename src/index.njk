@@ -1,12 +1,12 @@
 ---
 title: Notebooks
 layout: 'base.njk'
-bodyClass: with-sidebar
 ---
 <div class="notebook-layout">
 
 {# A few notes to revisit, rotating daily through all of them (oldest-touched first), so nothing in the long list is forgotten #}
 <aside class="visit-today">
+<div class="visit-today-inner">
 <h2>Visit today</h2>
 <ul>
     {% for post in collections.notes %}
@@ -17,6 +17,7 @@ bodyClass: with-sidebar
     </li>
     {% endfor %}
 </ul>
+</div>
 </aside>
 
 <div class="notebook-main">
@@ -28,9 +29,12 @@ bodyClass: with-sidebar
 <p align="justify">The format of these notebooks is copied from <a href="http://bactra.org/notebooks/">Cosma Shalizi</a> and I am deeply grateful for him to come up with such a nice idea.</p>
 <hr>
 
+<div class="notes-toolbar">
 <div class="view-toggle" role="group" aria-label="How to show the notes">
     <button type="button" data-view="categories" aria-pressed="true">By category</button>
     <button type="button" data-view="list" aria-pressed="false">Show all as list</button>
+</div>
+<input type="search" class="notes-filter" placeholder="Search notes…" aria-label="Search notes by title" autocomplete="off">
 </div>
 
 {# Grouped by the categories in the Index note (src/posts/index.md) #}
@@ -75,6 +79,7 @@ bodyClass: with-sidebar
 </div>
 
 <div class="notes-view" data-view="list" hidden>
+<p class="filter-status" hidden><span class="filter-empty">No note titles match.</span> <a class="filter-fulltext" href="/search/">Search inside notes</a></p>
 <ul>
     {% for post in collections.notes %}
             <li>
@@ -101,20 +106,48 @@ bodyClass: with-sidebar
     }
   })();
 
-  // Switch between the category view and the full list; remember the choice
+  // Switch between the category view and the full list; remember the choice.
+  // Typing in the search box shows the matching notes as a list until it is cleared.
   (function () {
     var buttons = document.querySelectorAll(".view-toggle button");
     var views = document.querySelectorAll(".notes-view");
+    var filter = document.querySelector(".notes-filter");
+    var listItems = document.querySelectorAll('.notes-view[data-view="list"] li');
+    var status = document.querySelector(".filter-status");
+    var empty = document.querySelector(".filter-empty");
+    var fulltext = document.querySelector(".filter-fulltext");
+    var chosen = "categories";
+
     function show(name) {
       views.forEach(function (v) { v.hidden = v.dataset.view !== name; });
       buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.view === name); });
-      try { localStorage.setItem("notes-view", name); } catch (e) {}
     }
+    function choose(name) {
+      chosen = name;
+      try { localStorage.setItem("notes-view", name); } catch (e) {}
+      if (filter.value) { filter.value = ""; applyFilter(); }
+      show(name);
+    }
+    function applyFilter() {
+      var q = filter.value.trim().toLowerCase();
+      var matches = 0;
+      listItems.forEach(function (li) {
+        var hit = !q || li.querySelector("a").textContent.toLowerCase().indexOf(q) !== -1;
+        li.hidden = !hit;
+        if (hit) matches++;
+      });
+      status.hidden = !q;
+      empty.hidden = matches > 0;
+      fulltext.textContent = "Search inside notes for \u201c" + filter.value.trim() + "\u201d \u2192";
+      fulltext.href = "/search/?q=" + encodeURIComponent(filter.value.trim());
+      show(q ? "list" : chosen);
+    }
+
     buttons.forEach(function (b) {
-      b.addEventListener("click", function () { show(b.dataset.view); });
+      b.addEventListener("click", function () { choose(b.dataset.view); });
     });
-    var saved = null;
-    try { saved = localStorage.getItem("notes-view"); } catch (e) {}
-    if (saved === "list") show("list");
+    filter.addEventListener("input", applyFilter);
+    try { if (localStorage.getItem("notes-view") === "list") chosen = "list"; } catch (e) {}
+    show(chosen);
   })();
 </script>

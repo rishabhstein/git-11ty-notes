@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{{ title }}</title>
+    <title>{% if title and title != "Notebooks" %}{{ title }} · Notebooks{% else %}Notebooks{% endif %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="sigmarootpi">
@@ -15,7 +15,8 @@
     <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
 
     <!-- Le styles -->
-    <link rel="stylesheet" href="/style.css?v=3.6">
+    <link rel="stylesheet" href="/style.css?v=5.2">
+    {% if 'class="katex' in content %}<link rel="stylesheet" href="/katex/katex.min.css">{% endif %}
 
     <!-- Fav and touch icons -->
     <link rel="icon" type="image/png" href="/assets/logo.png">
@@ -28,7 +29,6 @@
     <main>
     {{ content | safe }}
     </main>
-    <br><br><br><br>
     {% include 'footer.njk' %}
 </body>
 </html>

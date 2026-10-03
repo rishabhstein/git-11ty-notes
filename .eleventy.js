@@ -1,6 +1,9 @@
 const { execSync } = require("child_process");
 const fs = require("fs");
 const { indexVault, obsidianLinks } = require("./src/utils/obsidian-links");
+const markdownItFootnote = require("markdown-it-footnote");
+const markdownItMark = require("markdown-it-mark");
+const { noteReferences } = require("./src/utils/note-references");
 
 
 module.exports = async function(eleventyConfig) {
@@ -18,6 +21,57 @@ module.exports = async function(eleventyConfig) {
   // Embedded images are only taken from ./assets (already copied above)
   const vault = indexVault("src", "src/posts", "assets");
   eleventyConfig.amendLibrary("md", (md) => md.use(obsidianLinks, vault));
+
+  // LaTeX maths ($...$ and $$...$$) rendered by KaTeX at build time, [^footnotes],
+  // ==highlights== and bare https:// links, as in Obsidian
+  const { katex } = await import("@mdit/plugin-katex");
+  eleventyConfig.amendLibrary("md", (md) => {
+    md.set({ linkify: true });
+    md.linkify.set({ fuzzyLink: false });
+    md.use(katex).use(markdownItFootnote).use(markdownItMark).use(noteReferences);
+    // Footnote markers as plain numbers ("1", "2:1") instead of "[1]"
+    md.renderer.rules.footnote_caption = (tokens, idx) => {
+      const { id, subId } = tokens[idx].meta;
+      return String(id + 1) + (subId > 0 ? `:${subId}` : "");
+    };
+  });
+  eleventyConfig.addPassthroughCopy({
+    "node_modules/katex/dist/katex.min.css": "katex/katex.min.css",
+    "node_modules/katex/dist/fonts": "katex/fonts",
+  });
+
+  // Infobox on note pages, filled from frontmatter:
+  //   image: plato.jpg            (or [[plato.jpg]], or an https:// URL)
+  //   image_caption: Bust of Plato
+  //   info:
+  //     - "Born: c. 428 BCE"
+  //     - "Teacher: [[socrates|Socrates]]"
+  // Like embeds, image files are only taken from ./assets.
+  let markdownLib;
+  eleventyConfig.amendLibrary("md", (md) => {
+    markdownLib = md;
+  });
+  eleventyConfig.addFilter("infoboxImage", function (value) {
+    if (!value) return null;
+    const name = String(value).trim().replace(/^!?\[\[|\]\]$/g, "").split("|")[0].trim();
+    if (/^https?:\/\//i.test(name)) return name;
+    const file = vault.attachments.get(name.split("/").pop().normalize("NFC").toLowerCase());
+    if (!file) console.warn(`[infobox] ${this.page.inputPath}: image "${name}" not found in ./assets`);
+    return file ? file.url.split("/").map(encodeURIComponent).join("/") : null;
+  });
+  eleventyConfig.addFilter("infoboxRows", (info) =>
+    [].concat(info || []).map((item) => {
+      const text = String(item);
+      const colon = text.indexOf(":");
+      // "Label: value"; text with no label (or a URL) becomes a full-width row
+      return colon > 0 && !/^[a-z]+:\/\//i.test(text)
+        ? { label: text.slice(0, colon).trim(), value: text.slice(colon + 1).trim() }
+        : { label: "", value: text.trim() };
+    })
+  );
+  eleventyConfig.addFilter("inlineMarkdown", function (text) {
+    return markdownLib.renderInline(String(text), { page: this.page });
+  });
 
   // Note dates come from frontmatter: `cdate` (created) and `mdate` (modified,
   // kept up to date by Obsidian). Git and file times are not used because

@@ -20,4 +20,10 @@ layout: 'base.njk'
 
 <div id="search" class="search"></div>
 
-<script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false });"></script>
+<script src="/_pagefind/pagefind-ui.js"></script>
+<script>
+  // Start the search from ?q=… (used by the search box on the homepage)
+  var searchUI = new PagefindUI({ element: "#search", showImages: false });
+  var initialQuery = new URLSearchParams(location.search).get("q");
+  if (initialQuery) searchUI.triggerSearch(initialQuery);
+</script>

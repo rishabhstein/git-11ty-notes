@@ -27,6 +27,10 @@
   --font-size-caption: 0.8rem;
   --font-size-code: 0.95rem;
   --font-size-byline: 0.625rem;     /* 10pt */
+
+  /* Fonts: the system's own UI and monospace fonts, nothing to download */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 /* Base styles */
@@ -37,7 +41,7 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   text-rendering: optimizeLegibility;
-  font-family: 'Source Sans Pro', 'Helvetica', sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.55;
   font-size: var(--font-size-base);
 }
@@ -54,14 +58,21 @@ header {
   padding-bottom: 0.75em;
 }
 
-.site-header h1 {
-  margin: 1em 0 0.4em;
+.site-title {
+  display: block;
+  margin: 1em 0 0.5em;
+  font-size: var(--font-size-h1);
+  color: var(--color-text);
+}
+
+.site-title:hover {
+  text-decoration: none;
 }
 
 .site-nav {
   display: inline-flex;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 5pt;
   overflow: hidden;
 }
 
@@ -79,16 +90,15 @@ header {
 }
 
 footer {
-  border-top: 1px solid var(--color-border);
   padding: 0.5em 15%;
-  font-family: 'Source Sans Pro', 'Helvetica', sans-serif;
+  font-family: var(--font-sans);
   text-align: center;
   font-size: var(--font-size-caption);
   margin: 0;
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Source Sans Pro', 'Helvetica', sans-serif;
+  font-family: var(--font-sans);
   font-weight: normal;
   margin: 1.5em 0 0.5em 0;
   text-decoration: none;
@@ -121,24 +131,12 @@ h2 {
   font-size: var(--font-size-h2);
 }
 
-/* Horizontal rules */
+/* Horizontal rules: a thin line that fades out at both ends */
 hr {
   border: 0;
-  height: 0;
-  border-bottom: 1px solid var(--color-border);
-  margin: 1em 0 3em 0;
-  text-align: center;
-  position: relative;
-}
-
-body > hr::after {
-  content: "...";
-  letter-spacing: 1em;
-  font-weight: bold;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 50%;
+  height: 1px;
+  margin: 2em 0;
+  background: linear-gradient(to right, transparent, var(--color-border) 15%, var(--color-border) 85%, transparent);
 }
 
 /* Text elements */
@@ -147,13 +145,15 @@ p {
 }
 
 blockquote {
-  font-size: var(--font-size-small);
-  margin: 0;
+  margin: 1.25em 0;
+  padding: 0.1em 1.1em;
+  border-left: 3px solid var(--color-border);
+  color: #444444;
 }
 
 span.byline, span.home {
   font-size: var(--font-size-byline);
-  font-family: 'Source Sans Pro', 'Helvetica', sans-serif;
+  font-family: var(--font-sans);
 }
 
 span.home {
@@ -169,7 +169,7 @@ dt, caption {
 }
 
 p, figcaption, li, caption, td, th, dt, dd {
-  font-family: 'Source Sans Pro', 'Helvetica', sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.55;
 }
 
@@ -194,18 +194,9 @@ figure, footer {
   margin: 0;
 }
 
-/* Footnotes */
-.footnotes, .footnotes p {
-  font-size: var(--font-size-footnotes);
-}
-
-.footnotes li:target {
-  background-color: var(--color-code-yellow-bg);
-}
-
 /* Source code styling */
 .sourceCode, code {
-  font-family: "Source Code Pro", monospace;
+  font-family: var(--font-mono);
   font-weight: 500;
   font-size: var(--font-size-code);
   line-height: 1.55;
@@ -351,22 +342,14 @@ code span.op {
   padding: 0 10%;
 }
 
-/* Index page: "Visit today" panel beside the notes list */
-body.with-sidebar {
-  max-width: 1100px;
-}
-
+/* Index page: "Visit today" panel. The main column stays centred at the same
+   place as on every other page; on wide screens the panel hangs off its left
+   edge, on narrower screens it sits above the intro as a row of cards. */
 .notebook-layout {
-  display: grid;
-  grid-template-columns: 240px minmax(0, 800px);
-  gap: 3em;
-  justify-content: center;
+  position: relative;
 }
 
 .visit-today {
-  position: sticky;
-  top: 1em;
-  align-self: start;
   font-size: var(--font-size-small);
 }
 
@@ -388,11 +371,49 @@ body.with-sidebar {
   color: var(--color-code-gray-dark);
 }
 
+@media (min-width: 1340px) {
+  .visit-today {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    width: 220px;
+    margin-right: 40px;
+  }
+
+  .visit-today-inner {
+    position: sticky;
+    top: 1em;
+  }
+}
+
+@media (max-width: 1339px) {
+  .visit-today ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75em;
+  }
+
+  .visit-today li {
+    margin: 0;
+    padding: 0.6em 0.8em;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+  }
+
+  .visit-today p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
 /* Index page: switch between categories and the full list */
 .view-toggle {
   display: inline-flex;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 5pt;
   overflow: hidden;
   margin-bottom: 0.5em;
 }
@@ -413,6 +434,32 @@ body.with-sidebar {
 .view-toggle button[aria-pressed="true"] {
   background-color: #f0f0f0;
   color: var(--color-text);
+}
+
+/* View switch and search box side by side */
+.notes-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75em;
+}
+
+.notes-toolbar .view-toggle {
+  margin-bottom: 0;
+}
+
+.notes-filter {
+  flex: 1 1 200px;
+  font: inherit;
+  padding: 0.3em 1em;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background-color: #ffffff;
+}
+
+.filter-status {
+  font-size: var(--font-size-small);
+  color: var(--color-code-gray-dark);
 }
 
 /* Categories as cards in a grid; the unsorted group spans the full row */
@@ -571,14 +618,394 @@ body.with-sidebar {
   color: var(--color-code-gray-dark);
 }
 
-@media (max-width: 900px) {
-  .notebook-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+
+/* Note pages: a reading layout with larger text, and lists, quotes, code
+   and footnotes styled as one system */
+.note-title {
+  font-size: 1.35rem;
+  font-weight: bold;
+  line-height: 1.25;
+  margin: 0.9em 0 0.3em;
+  color: var(--color-text);
+}
+
+.note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em 1.5em;
+  margin: 0 0 1em;
+  font-size: 0.875rem;
+  color: var(--color-code-gray-dark);
+}
+
+.note-body {
+  font-size: var(--font-size-base);
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.note-body p {
+  margin: 0.75em 0;
+}
+
+.note-body h2 {
+  font-size: var(--font-size-h2);
+  margin: 1.5em 0 0.5em;
+}
+
+.note-body h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 1.25em 0 0.4em;
+}
+
+.note-body img,
+.note-body video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Lists */
+.note-body ul,
+.note-body ol {
+  margin: 0.75em 0;
+  padding-left: 1.5em;
+}
+
+.note-body li {
+  margin: 0.15em 0;
+  padding-left: 0.15em;
+}
+
+.note-body li::marker {
+  color: #8a8a8a;
+}
+
+.note-body ol > li::marker {
+  font-variant-numeric: tabular-nums;
+}
+
+.note-body li > ul,
+.note-body li > ol {
+  margin: 0.15em 0;
+}
+
+/* Quotes */
+.note-body blockquote {
+  margin: 1em 0;
+  padding: 0.6em 1em;
+  background-color: #f6f5f2;
+  border-left: 4px solid #d3cfc6;
+  border-radius: 0 6px 6px 0;
+  color: #333333;
+}
+
+.note-body blockquote p:first-child {
+  margin-top: 0;
+}
+
+.note-body blockquote p:last-child,
+.note-body blockquote ul:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline code and code blocks, sized to sit well next to the text */
+.note-body code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  font-weight: normal;
+  background-color: #f2f1ee;
+  border: 1px solid #e5e3de;
+  border-radius: 4px;
+  padding: 0.08em 0.35em;
+}
+
+.note-body pre {
+  margin: 1em 0;
+  background-color: #f7f6f3;
+  border: 1px solid #e5e3de;
+  border-radius: 6px;
+  padding: 0.75em 1em;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+
+.note-body pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.85em;
+}
+
+/* ==highlight== */
+mark {
+  background-color: #fff2a8;
+  color: inherit;
+  padding: 0.05em 0.2em;
+  border-radius: 3px;
+}
+
+/* Maths: wide equations scroll instead of overflowing the page */
+.katex-display {
+  margin: 1em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25em 0;
+}
+
+/* Tables */
+.note-body table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.95em;
+}
+
+.note-body th,
+.note-body td {
+  border: 1px solid #dddad3;
+  padding: 0.45em 0.85em;
+  text-align: left;
+}
+
+.note-body th {
+  background-color: #f6f5f2;
+}
+
+/* [^footnotes] and [1](#1) citations: plain superscript numbers in the text */
+.footnote-ref,
+.cite-ref {
+  font-size: 0.72em;
+  line-height: 0;
+  vertical-align: super;
+}
+
+.footnote-ref a,
+a.cite-ref {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0 0.15em;
+}
+
+/* Small bold subheadings for label lines such as "Recommended:" or "See also:" */
+.note-body .section-label {
+  font-weight: 600;
+  margin: 1.25em 0 0.25em;
+}
+
+/* Reference section at the end of a note: footnotes, or a hand-made
+   "References:" list, both get the same look */
+.footnotes,
+.note-body .refs-title {
+  margin-top: 2em;
+  padding-top: 0.9em;
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, var(--color-border) 15%, var(--color-border) 85%, transparent) 1;
+}
+
+.note-body .footnotes-title,
+.note-body .refs-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-code-gray-dark);
+  margin: 0 0 0.6em;
+}
+
+.footnotes ol,
+.note-body .refs-list {
+  font-size: var(--font-size-small);
+  color: #3a3a3a;
+  margin: 0;
+  padding-left: 1.6em;
+}
+
+.footnotes li,
+.note-body .refs-list li {
+  margin: 0 0 0.45em;
+  padding-left: 0.25em;
+  line-height: 1.5;
+}
+
+.footnotes li::marker,
+.note-body .refs-list li::marker {
+  color: #9a9a9a;
+  font-variant-numeric: tabular-nums;
+}
+
+.footnotes li p {
+  margin: 0;
+}
+
+.footnotes li:target,
+.note-body .refs-list li:has(a[name]:target) {
+  background-color: #fff8d6;
+  border-radius: 4px;
+}
+
+.footnote-backref {
+  text-decoration: none;
+  margin-left: 0.3em;
+  font-size: 0.85em;
+  color: #9a9a9a;
+}
+
+.footnote-backref:hover {
+  color: var(--color-link);
+}
+
+/* Infobox (image and facts from frontmatter). On wide screens it hangs off the
+   right edge of the centred column, mirroring "Visit today" on the homepage;
+   on medium screens it floats right inside the text; on phones it sits on top. */
+.note {
+  position: relative;
+}
+
+.infobox-inner {
+  border: 1px solid #dddad3;
+  border-radius: 6px;
+  background-color: #ffffff;
+  padding: 0.75em;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.infobox-title {
+  font-weight: bold;
+  font-size: 1.05rem;
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
+.infobox figure {
+  margin: 0 0 0.6em;
+}
+
+.infobox img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.infobox figcaption {
+  margin-top: 0.35em;
+  font-size: 0.8rem;
+  color: var(--color-code-gray-dark);
+  text-align: center;
+}
+
+.infobox table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.infobox th,
+.infobox td {
+  padding: 0.35em 0.25em;
+  border-top: 1px solid #eeebe5;
+  vertical-align: top;
+  text-align: left;
+  font-family: var(--font-sans);
+  line-height: 1.45;
+}
+
+.infobox th {
+  width: 38%;
+  padding-right: 0.6em;
+  font-weight: 600;
+  color: #333333;
+}
+
+@media (min-width: 1340px) {
+  .infobox {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 240px;
+    margin-left: 40px;
   }
-  .visit-today {
-    position: static;
+
+  .infobox-inner {
+    position: sticky;
+    top: 1em;
   }
+}
+
+@media (min-width: 700px) and (max-width: 1339px) {
+  .infobox {
+    float: right;
+    width: 250px;
+    margin: 0 0 1em 1.5em;
+  }
+
+  /* Boxes with a background or border stop beside the card instead of
+     running underneath it */
+  .note-body blockquote,
+  .note-body pre,
+  .note-body table,
+  .note-body hr,
+  .note-body .refs-title,
+  .footnotes {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 699px) {
+  .infobox {
+    margin-bottom: 1em;
+  }
+
+  .infobox img {
+    max-height: 45vh;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.note-footer {
+  clear: both;
+  margin-top: 2em;
+  font-size: 0.9rem;
+}
+
+/* Site footer: a short centred line, contact, then build details and license */
+.site-footer {
+  margin: 3em 0 2em;
+  color: var(--color-code-gray-dark);
+}
+
+.site-footer::before {
+  content: "";
+  display: block;
+  width: 4em;
+  height: 1px;
+  margin: 0 auto 1em;
+  background-color: var(--color-border);
+}
+
+.site-footer p {
+  margin: 0.4em 0;
+  font-size: inherit;
+  line-height: 1.6;
+}
+
+.site-colophon {
+  font-size: 0.7rem;
+  color: #8a8a8a;
+}
+
+.site-colophon a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: #cfcfcf;
+  text-underline-offset: 2px;
+}
+
+.site-colophon a:hover {
+  color: var(--color-link);
 }
 
 /* Font Faces */

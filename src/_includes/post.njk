@@ -3,21 +3,42 @@
 ---
 
 
-<article data-pagefind-body>
-{% if mdate %}<span>Modified at: {{ mdate | postDateNotes }}</span><br>{% endif %}
+<article class="note" data-pagefind-body>
+<h1 class="note-title">{{ title or page.fileSlug }}</h1>
+<p class="note-meta">
+    {% if cdate %}<span>Posted {{ cdate | shortDate }}</span>{% endif %}
+    {% if mdate %}<span>Modified {{ mdate | postDateNotes }}</span>{% endif %}
+</p>
+{% set infoImage = image | infoboxImage %}
+{% if infoImage or info %}
+<aside class="infobox">
+<div class="infobox-inner">
+    <div class="infobox-title">{{ title }}</div>
+    {% if infoImage %}
+    <figure>
+        <img src="{{ infoImage }}" alt="{{ image_caption or title }}" loading="lazy">
+        {% if image_caption %}<figcaption>{{ image_caption | inlineMarkdown | safe }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
+    {% if info %}
+    <table>
+        {% for row in info | infoboxRows %}
+        <tr>
+            {% if row.label %}<th scope="row">{{ row.label }}</th><td>{{ row.value | inlineMarkdown | safe }}</td>
+            {% else %}<td colspan="2">{{ row.value | inlineMarkdown | safe }}</td>{% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+</aside>
+{% endif %}
 
-<div>
-        <main>
-            {{ content | safe }}
-        </main>
+<div class="note-body">
+    {{ content | safe }}
 </div>
 
-<blockquote>    
-
-    <span>Posted at: {{ cdate | postDate }}</span> <br/>
+<footer class="note-footer">
     <a href='mailto:sigmarootpi@proton.me?subject=Blogentry: {{ title }}'>Reply via email</a>
-    
-    <br />
-    
-</blockquote>
+</footer>
 </article>

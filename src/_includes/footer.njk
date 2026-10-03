@@ -1,5 +1,11 @@
-
-<footer align="center">
-    contact me: sigmarootpi@proton.me
-    <br><br><br>
+<footer class="site-footer">
+    <p>contact me: sigmarootpi [at] proton [dot] me</p>
+    <p class="site-colophon">
+        Last built {{ build.time | postDateNotes }} UTC
+        {% if build.commit %}· commit <a href="{{ build.commitUrl }}">{{ build.commit }}</a>{% endif %}
+        · Powered by <a href="https://www.11ty.dev/">Eleventy</a>
+        <br>
+        © 2024–{{ build.time.getUTCFullYear() }} Rishabh P. Sharma · Notes licensed under
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a>
+    </p>
 </footer>

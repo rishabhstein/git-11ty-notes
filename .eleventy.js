@@ -1,5 +1,6 @@
 const { execSync } = require("child_process");
 const getLastModifiedDate = require("./src/utils/git-date");
+const { indexVault, obsidianLinks } = require("./src/utils/obsidian-links");
 
 
 module.exports = async function(eleventyConfig) {
@@ -12,6 +13,11 @@ module.exports = async function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./assets');
   eleventyConfig.addPassthroughCopy('./src/style.css');
   eleventyConfig.addPassthroughCopy('./src/robots.txt');
+
+  // Obsidian-style [[wikilinks]], ![[embeds]] and [links](note.md)
+  // Embedded images are only taken from ./assets (already copied above)
+  const vault = indexVault("src", "src/posts", "assets");
+  eleventyConfig.amendLibrary("md", (md) => md.use(obsidianLinks, vault));
 
   // Creating a datetime format filter
   eleventyConfig.addFilter("postDate", (dateObj) => {

@@ -3,7 +3,6 @@ name: Deploy blog to GitHub Pages
 on:
   push:
     branches:
-      - gh-pages
       - master
   workflow_dispatch:
 
@@ -23,13 +22,13 @@ jobs:
       SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
       SITE_PATH_PREFIX: ${{ vars.SITE_PATH_PREFIX || format('/{0}/', github.event.repository.name) }}
       SITE_CNAME: ${{ vars.SITE_CNAME || '' }}
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
+        with:
+          # Full history so git-date.js can read each post's last-modified date
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v7
@@ -51,6 +50,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Deploy to GitHub Pages

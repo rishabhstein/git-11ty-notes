@@ -4,7 +4,7 @@ const getLastModifiedDate = require("./src/utils/git-date");
 
 module.exports = async function(eleventyConfig) {
   // Dynamically import ESM modules
-  const { EleventyRenderPlugin } = await import("@11ty/eleventy");
+  const { EleventyRenderPlugin, HtmlBasePlugin } = await import("@11ty/eleventy");
   const { feedPlugin } = await import("@11ty/eleventy-plugin-rss");
   const { DateTime } = await import("luxon");
 
@@ -32,6 +32,9 @@ module.exports = async function(eleventyConfig) {
 
   // Using RenderPlugin
   eleventyConfig.addPlugin(EleventyRenderPlugin);
+
+  // Rewrites root-relative URLs (/style.css etc.) to include pathPrefix
+  eleventyConfig.addPlugin(HtmlBasePlugin);
 
   //Sorting posts from GitlastModifiedDate
   eleventyConfig.addCollection("posts", async function(collectionApi) {
@@ -63,6 +66,7 @@ module.exports = async function(eleventyConfig) {
   });
 
   return {
+    pathPrefix: process.env.SITE_PATH_PREFIX || "/",
     dir: {
       input: "src",
       output: "_site"

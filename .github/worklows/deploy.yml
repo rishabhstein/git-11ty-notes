@@ -3,7 +3,7 @@ name: Deploy blog to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - gh-pages
       - master
   workflow_dispatch:
 

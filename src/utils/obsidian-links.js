@@ -74,7 +74,8 @@ function obsidianLinks(md, { notes, attachments }) {
     if (isMd) name = name.slice(0, -3);
     const url = notes.get(key(name));
     if (url) return { url: encodePath(url) + (fragment ? "#" + fragment : "") };
-    return { missing: isMd };
+    // "note.md" or a bare "note" (no file extension) points at a note that doesn't exist
+    return { missing: isMd || !/\.[a-z0-9]+$/i.test(name) };
   };
 
   // [[...]] and ![[...]]
@@ -123,14 +124,29 @@ function obsidianLinks(md, { notes, attachments }) {
   });
 
   // [text](note.md) and ![alt](image.png)
+  // Links to missing notes are rendered as plain text, like unresolved [[wikilinks]]
+  const unlink = (token) => {
+    token.type = "text";
+    token.tag = "";
+    token.content = "";
+  };
+
   md.core.ruler.push("obsidian_md_links", (state) => {
     for (const block of state.tokens) {
+      let unlinking = false;
       for (const token of block.children || []) {
         if (token.type === "link_open") {
           const href = token.attrGet("href");
           const resolved = resolveHref(href);
           if (resolved && resolved.url) token.attrSet("href", resolved.url);
-          else if (resolved && resolved.missing) warn(state.env, `unresolved link (${href})`);
+          else if (resolved && resolved.missing) {
+            warn(state.env, `unresolved link (${href})`);
+            unlink(token);
+            unlinking = true;
+          }
+        } else if (token.type === "link_close" && unlinking) {
+          unlink(token);
+          unlinking = false;
         } else if (token.type === "image") {
           const src = token.attrGet("src");
           if (!src || /^([a-z][a-z0-9+.-]*:|\/)/i.test(src)) continue;

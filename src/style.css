@@ -107,9 +107,11 @@ header {
   padding-bottom: 0.75em;
 }
 
+.site-name {
+  margin: 1em 0 0.35em;
+}
+
 .site-title {
-  display: block;
-  margin: 1em 0 0;
   font-size: var(--font-size-h1);
   color: var(--color-text);
 }
@@ -118,29 +120,20 @@ header {
   text-decoration: none;
 }
 
-.site-subtitle {
-  margin: 0 0 0.6em;
+.site-byline {
   font-size: var(--font-size-small);
   color: var(--color-code-gray-dark);
 }
 
-.site-nav {
-  display: inline-flex;
-  border: 1px solid var(--color-border);
-  border-radius: 5pt;
-  overflow: hidden;
+/* Nav: plain links with a little space and a dot between them */
+.site-nav a + a::before {
+  content: "·";
+  display: inline-block;
+  margin: 0 0.6em;
+  color: var(--color-faint);
 }
 
-.site-nav a {
-  padding: 0.3em 1.1em;
-}
-
-.site-nav a + a {
-  border-left: 1px solid var(--color-border);
-}
-
-.site-nav a:hover {
-  background-color: var(--color-hover);
+.site-nav a:hover::before {
   text-decoration: none;
 }
 

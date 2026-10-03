@@ -1,7 +1,9 @@
 ---
-title: "Stoicism"
+title: Stoicism
 cdate: 2024-09-04
 date: Last Modified
+tags:
+  - philosophy
 ---
 
 Surprisingly, very similar ideas---maybe there is even a connection

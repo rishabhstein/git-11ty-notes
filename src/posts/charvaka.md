@@ -1,7 +1,9 @@
 ---
-title: "Charvaka"
+title: Charvaka
 cdate: 2025-01-31
 date: Last Modified
+tags:
+  - philosophy
 ---
 
 I came to know about this philosophy from a youtube documentary [Bharat

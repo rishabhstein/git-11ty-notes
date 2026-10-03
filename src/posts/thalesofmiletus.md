@@ -5,6 +5,14 @@ mdate: 2025-11-10T19:01
 date: Last Modified
 tags:
   - philosophy
+image: https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Arte_romana%2C_testa_di_talete_di_mileto%2C_II_sec..JPG/330px-Arte_romana%2C_testa_di_talete_di_mileto%2C_II_sec..JPG
+image_caption: Roman bust of Thales, 2nd century
+info:
+  - "Born: c. 624 BCE, Miletus"
+  - "Died: c. 546 BCE"
+  - "School: Milesian"
+  - "Known for: Water as the arche, first Greek philosopher"
+  - "Students: [[anaximander|Anaximander]]"
 ---
 
 A *pre-Socratic* Greek philosopher from Miletus—a town of present day Turkey—(existed around the same time as [Anaximenes](anaximenes) and [Anaximander](anaximander)). He is often referred as **the first philosopher** who claimed:

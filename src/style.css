@@ -109,13 +109,19 @@ header {
 
 .site-title {
   display: block;
-  margin: 1em 0 0.5em;
+  margin: 1em 0 0;
   font-size: var(--font-size-h1);
   color: var(--color-text);
 }
 
 .site-title:hover {
   text-decoration: none;
+}
+
+.site-subtitle {
+  margin: 0 0 0.6em;
+  font-size: var(--font-size-small);
+  color: var(--color-code-gray-dark);
 }
 
 .site-nav {

@@ -15,7 +15,7 @@
     <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
 
     <!-- Le styles -->
-    <link rel="stylesheet" href="/style.css?v=3.0">
+    <link rel="stylesheet" href="/style.css?v=3.6">
 
     <!-- Fav and touch icons -->
     <link rel="icon" type="image/png" href="/assets/logo.png">
@@ -23,7 +23,7 @@
     <link rel="alternate" type="application/rss+xml" title="Rishabh's Blog Feed" href="/feed.xml" />
 
 </head>
-<body>
+<body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
     {% include 'header.njk' %}
     <main>
     {{ content | safe }}

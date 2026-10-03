@@ -1,7 +1,25 @@
 ---
 title: Notebooks
 layout: 'base.njk'
+bodyClass: with-sidebar
 ---
+<div class="notebook-layout">
+
+{# A few notes to revisit, rotating daily through all of them (oldest-touched first), so nothing in the long list is forgotten #}
+<aside class="visit-today">
+<h2>Visit today</h2>
+<ul>
+    {% for post in collections.notes %}
+    <li{% if loop.revindex0 >= 5 %} hidden{% endif %}>
+        <a href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a>
+        {% set excerpt = post.content | striptags | trim %}
+        <p>{{ excerpt | truncate(140) if excerpt else "(empty so far)" }}</p>
+    </li>
+    {% endfor %}
+</ul>
+</aside>
+
+<div class="notebook-main">
 
 <p align="justify">This is a collection of my notes—some people call it a Garden—that I felt are worth keeping to recall information whenever I need it as quickly as possible. The material in these notebooks is mostly of my interest without any intention of being useful for others. Of course, in one lifetime, I could be an expert in maybe nothing. So it may offend other experts, for which you have my sincere apology in advance.</p>
 
@@ -10,12 +28,93 @@ layout: 'base.njk'
 <p align="justify">The format of these notebooks is copied from <a href="http://bactra.org/notebooks/">Cosma Shalizi</a> and I am deeply grateful for him to come up with such a nice idea.</p>
 <hr>
 
+<div class="view-toggle" role="group" aria-label="How to show the notes">
+    <button type="button" data-view="categories" aria-pressed="true">By category</button>
+    <button type="button" data-view="list" aria-pressed="false">Show all as list</button>
+</div>
+
+{# Grouped by the categories in the Index note (src/posts/index.md) #}
+<div class="notes-view" data-view="categories">
+{% for group in collections.categories %}
+{% set popoverId = "category-" + (group.name | slugify) %}
+<section class="category{% if group.unsorted %} wide{% endif %}">
+{% if group.unsorted %}
+<h3>{{ group.name }} <span class="count">{{ group.notes.length }}</span></h3>
+{% else %}
+<h3><button type="button" class="category-open" popovertarget="{{ popoverId }}">{{ group.name }} <span class="count">{{ group.notes.length }}</span></button></h3>
+{% endif %}
+<ul>
+    {% for post in group.notes %}{% if group.unsorted or loop.index <= 10 %}
+            <li>
+                <a href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a>
+                <time>{{ post.data | lastModified | shortDate }}</time>
+            </li>
+    {% endif %}{% endfor %}
+</ul>
+{% if not group.unsorted %}
+<button type="button" class="category-more" popovertarget="{{ popoverId }}">Show all {{ group.notes.length }} &rarr;</button>
+
+{# Full list of the category, shown as an overlay (native popover: closes on Esc or outside click) #}
+<div class="category-popover" id="{{ popoverId }}" popover>
+    <div class="category-popover-head">
+        <h3>{{ group.name }} <span class="count">{{ group.notes.length }}</span></h3>
+        <button type="button" popovertarget="{{ popoverId }}" popovertargetaction="hide" aria-label="Close">&times;</button>
+    </div>
+    <ul>
+        {% for post in group.notes %}
+        <li>
+            <a href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a>
+            <time>{{ post.data | lastModified | shortDate }}</time>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+</section>
+{% endfor %}
+</div>
+
+<div class="notes-view" data-view="list" hidden>
 <ul>
     {% for post in collections.notes %}
             <li>
-                <a href="{{ post.url }}">{{ post.data.title }}</a> 
+                <a href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a> 
                 <i>({{ post.data | lastModified | postDateNotes }})</i>
             </li>
     {% endfor %}
 </ul>
+</div>
  
+</div>
+</div>
+
+<script>
+  // Show 5 notes per day, walking from the least recently modified note through all of them
+  (function () {
+    var items = document.querySelectorAll(".visit-today li");
+    var n = items.length, perDay = 5;
+    if (n <= perDay) return;
+    var day = Math.floor(Date.now() / 86400000);
+    items.forEach(function (li) { li.hidden = true; });
+    for (var i = 0; i < perDay; i++) {
+      items[n - 1 - ((day * perDay + i) % n)].hidden = false;
+    }
+  })();
+
+  // Switch between the category view and the full list; remember the choice
+  (function () {
+    var buttons = document.querySelectorAll(".view-toggle button");
+    var views = document.querySelectorAll(".notes-view");
+    function show(name) {
+      views.forEach(function (v) { v.hidden = v.dataset.view !== name; });
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.view === name); });
+      try { localStorage.setItem("notes-view", name); } catch (e) {}
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { show(b.dataset.view); });
+    });
+    var saved = null;
+    try { saved = localStorage.getItem("notes-view"); } catch (e) {}
+    if (saved === "list") show("list");
+  })();
+</script>

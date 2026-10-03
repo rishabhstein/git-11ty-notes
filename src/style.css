@@ -48,6 +48,36 @@ header {
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Page title and nav links, centred and grouped together */
+.site-header {
+  text-align: center;
+  padding-bottom: 0.75em;
+}
+
+.site-header h1 {
+  margin: 1em 0 0.4em;
+}
+
+.site-nav {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.site-nav a {
+  padding: 0.3em 1.1em;
+}
+
+.site-nav a + a {
+  border-left: 1px solid var(--color-border);
+}
+
+.site-nav a:hover {
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
+
 footer {
   border-top: 1px solid var(--color-border);
   padding: 0.5em 15%;
@@ -319,6 +349,236 @@ code span.op {
   min-height: 80vh;
   text-align: center;
   padding: 0 10%;
+}
+
+/* Index page: "Visit today" panel beside the notes list */
+body.with-sidebar {
+  max-width: 1100px;
+}
+
+.notebook-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 800px);
+  gap: 3em;
+  justify-content: center;
+}
+
+.visit-today {
+  position: sticky;
+  top: 1em;
+  align-self: start;
+  font-size: var(--font-size-small);
+}
+
+.visit-today h2 {
+  margin-top: 0.75em;
+}
+
+.visit-today ul {
+  list-style: none;
+  padding: 0;
+}
+
+.visit-today li {
+  margin-bottom: 1em;
+}
+
+.visit-today p {
+  margin: 0.25em 0 0;
+  color: var(--color-code-gray-dark);
+}
+
+/* Index page: switch between categories and the full list */
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.5em;
+}
+
+.view-toggle button {
+  font: inherit;
+  color: var(--color-link);
+  background: none;
+  border: 0;
+  padding: 0.3em 1.1em;
+  cursor: pointer;
+}
+
+.view-toggle button + button {
+  border-left: 1px solid var(--color-border);
+}
+
+.view-toggle button[aria-pressed="true"] {
+  background-color: #f0f0f0;
+  color: var(--color-text);
+}
+
+/* Categories as cards in a grid; the unsorted group spans the full row */
+.notes-view[data-view="categories"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1em;
+  align-items: start;
+  margin-top: 1em;
+}
+
+.notes-view[hidden] {
+  display: none;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.75em 1em;
+  background-color: #ffffff;
+}
+
+/* Cards show at most 10 notes and all have the same size */
+.category:not(.wide) > ul {
+  height: calc(10 * 1.85em);
+}
+
+.category:not(.wide) > ul li {
+  height: 1.85em;
+  padding: 0;
+  align-items: center;
+}
+
+.category:not(.wide) > ul li a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.category-open,
+.category-more {
+  font: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.category-open:hover {
+  text-decoration: underline;
+}
+
+.category-more {
+  margin-top: 0.5em;
+  color: var(--color-link);
+  font-size: var(--font-size-small);
+}
+
+.category-more:hover {
+  text-decoration: underline;
+}
+
+/* Overlay with a category's full list */
+.category-popover {
+  width: min(560px, 90vw);
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1em 1.25em;
+  background-color: #ffffff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.category-popover::backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.category-popover-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.category-popover-head button {
+  font-size: 1.5rem;
+  line-height: 1;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--color-code-gray-dark);
+}
+
+.category-popover ul {
+  margin: 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-popover li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75em;
+  padding: 0.2em 0;
+}
+
+.category-popover li time {
+  flex-shrink: 0;
+  font-size: var(--font-size-caption);
+  color: var(--color-code-gray-dark);
+}
+
+.category.wide {
+  grid-column: 1 / -1;
+}
+
+.category h3 {
+  margin: 0 0 0.5em;
+  font-weight: bold;
+}
+
+.category .count {
+  font-weight: normal;
+  font-size: var(--font-size-small);
+  color: var(--color-code-gray-dark);
+}
+
+.category ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category.wide ul {
+  columns: 230px;
+  column-gap: 2em;
+}
+
+.category li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75em;
+  padding: 0.15em 0;
+  break-inside: avoid;
+}
+
+.category li time {
+  flex-shrink: 0;
+  font-size: var(--font-size-caption);
+  color: var(--color-code-gray-dark);
+}
+
+@media (max-width: 900px) {
+  .notebook-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .visit-today {
+    position: static;
+  }
 }
 
 /* Font Faces */

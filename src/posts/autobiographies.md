@@ -1,7 +1,7 @@
 ---
-title: "Memoirs and (Auto)Biographies"
+title: Memoirs and (Auto)Biographies
 cdate: 2024-09-04
-mdate: 2025-10-29T15:49
+mdate: 2026-10-05T17:33:00
 date: Last Modified
 ---
 
@@ -30,6 +30,7 @@ Recommended:
     -   *Into Thin Air: A Personal Account of the Mt. Everest Disaster*
 	-   *Into the Wild: Christopher Johnson McCandless*
 - Alexander Frater, *Chasing the Monsoon: A Modern Pilgrimage Through India*,
+- [[haruki-murakami|Haruki Murakami]] What I talk about when I talk about running
 
 
 To read:

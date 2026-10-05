@@ -1,7 +1,7 @@
 ---
 title: Viscous fingering
 cdate: 2025-10-25
-mdate: 2025-11-10T19:01
+mdate: 2026-10-05T17:31
 date: Last Modified
 tags:
   - pattern-formation
@@ -16,9 +16,7 @@ In the case of two miscible fluids, a similar experiment produces a highly branc
 This can be put into the category of miscible fluids but with a chemical reaction involved. The simplest example of a reaction is A + B -> C where A is injected in B. Here A does not need to be less viscous which is otherwise stable. When A is injected into B, the formation of C (different viscosity) make the front prone to perturbation, resulting into fingers. The viscosity of C decides whether the fingers form behind the reaction front (C has smallest viscosity) or ahead (C has largest viscosity)  of it [2].
 
 ---
-Recommended (References):
+#### References:
 
 1. Rishabh P. Sharma, P. Szymczak, *Self-organization of flow in dissolving rocks*, 2025, [PhD thesis](https://repozytorium.uw.edu.pl/bitstreams/ff6a3069-8542-4278-bc30-2d40374648a7/download)
 2. De Wit A. 2016,  Chemo-hydrodynamic patterns in porous  media. Phil. Trans. R. Soc. A 374: 20150419.  http://dx.doi.org/10.1098/rsta.2015.0419
-
-To-read:

@@ -1,12 +1,12 @@
 ---
-title: "localDNS"
+title: Guide to setup localDNS with caddy
 cdate: 2026-10-03
-mdate: 2026-10-03T21:37
+mdate: 2026-10-05T17:37:00
 date: Last Modified
 tags:
-  - "selfhost"
-  - "tech"
-location: "Brussels, Belgium"
+  - selfhost
+  - tech
+location: Brussels, Belgium
 ---
 This is going to be a technical post where I want to dump the steps of setting up *Caddy, Cloudflare, and Tailscale* for local DNS so that I can access self-hosted apps using *app.yourdomain.com*.
 

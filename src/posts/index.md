@@ -1,7 +1,7 @@
 ---
 title: Index
 cdate: 2025-09-20
-mdate: 2026-10-03T21:42
+mdate: 2026-10-05T17:32:00
 date: Last Modified
 ---
 An attempt to categorise my notebooks
@@ -81,6 +81,7 @@ An attempt to categorise my notebooks
 - [[annefrank|Anne Frank]]
 - [[7yearsintibet|Seven Years in Tibet]]
 - [[autobiographies|Memoirs and (auto)biographies]]
+- [[haruki-murakami|Haruki Murakami]]
 
 ## Misc
 - [[arrangedmarriage|Arranged marriage]]

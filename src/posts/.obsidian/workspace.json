@@ -4,39 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "eb929f75bca2b9ab",
+        "id": "13b207432f28390a",
         "type": "tabs",
         "children": [
           {
-            "id": "6627382728b50137",
+            "id": "b3e4c16cbc132fd9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "haruki-murakami.md",
-                "mode": "preview",
-                "source": true
-              },
-              "icon": "lucide-file",
-              "title": "haruki-murakami"
-            }
-          },
-          {
-            "id": "f3053bad8d56253b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "richard-dawkins.md",
+                "file": "index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "richard-dawkins"
+              "title": "index"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -186,9 +171,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f3053bad8d56253b",
+  "active": "b3e4c16cbc132fd9",
   "lastOpenFiles": [
+    "democritus.md",
+    "lotka-volterra-model.md",
     "haruki-murakami.md",
+    "zz-t.md",
+    "references.bib",
+    "ref.bib~",
+    "@epsteinIntroductionNonlinearChemical1998.md",
+    "10.1093/oso/9780195096705.001.0001.md",
+    "10.1093/oso",
+    "10.1093",
+    "ref.bib",
     "richard-dawkins.md",
     "thalesofmiletus.md",
     "localdns.md",

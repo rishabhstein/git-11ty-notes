@@ -49,7 +49,27 @@
 {% endif %}
 
 <div class="note-body">
-    {{ content | safe }}
+    {{ content | citations | readingList | safe }}
+    {% if references.length %}
+    <section class="bibliography">
+        <h2 class="refs-title" id="bibliography">Bibliography</h2>
+        <dl class="references">
+            {% for reference in references %}
+            <div id="bib-{{ reference.id }}"{% if reference.missing %} class="missing"{% endif %}>
+                <dt><a href="#bib-{{ reference.id }}" class="reference">{{ reference | bibliography_citation }}</a></dt>
+                <dd>{{ reference | bibliography_entry({ doi_link: "id" }) | safe }}
+                    {% if reference.citations.length %}
+                    <small class="citation-links">
+                        <em>Cited in</em>
+                        {% for citation in reference.citations %}<a href="#ref-bib-{{ reference.id }}-{{ citation }}">{{ loop.index }}</a>{% if loop.revindex == 2 %} and{% elif not loop.last %},{% endif %} {% endfor %}
+                    </small>
+                    {% endif %}
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </section>
+    {% endif %}
 </div>
 
 <footer class="note-footer">

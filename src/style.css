@@ -991,6 +991,72 @@ a.cite-ref {
   padding: 0 0.15em;
 }
 
+/* [@key] citations, as in the plugin demo: [1], [2, 3], [4–7] */
+.citations a.reference {
+  text-decoration: none;
+}
+
+.citations a.reference.missing {
+  color: var(--color-code-brown);
+}
+
+/* Bibliography from ref.bib: "[1]" in one column, the entry in the other */
+.note-body dl.references {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.6em 0.8em;
+  margin: 0;
+  font-size: var(--font-size-small);
+  color: var(--color-text-soft);
+}
+
+.note-body dl.references > div {
+  display: contents;
+}
+
+.note-body dl.references dt a {
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.note-body dl.references dd {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.note-body dl.references > div:target > * {
+  background-color: var(--color-target);
+}
+
+.note-body dl.references > .missing > * {
+  color: var(--color-code-brown);
+}
+
+.citation-links {
+  display: block;
+  color: var(--color-faint);
+}
+
+/* `- @key` reading-list items: the full entry from ref.bib */
+.note-body li.reading-item.missing {
+  color: var(--color-code-brown);
+}
+
+a.doi {
+  white-space: nowrap;
+  font: 500 0.85em var(--font-sans);
+  text-decoration: none;
+}
+
+a.doi::before {
+  content: "\A0";
+  background: url("assets/doi.svg") no-repeat center / contain;
+  display: inline-block;
+  vertical-align: -0.15em;
+  width: 1em;
+  margin-inline: 0.4em 0.15em;
+}
+
 /* Small bold subheadings for label lines such as "Recommended:" or "See also:" */
 .note-body .section-label {
   font-weight: 600;

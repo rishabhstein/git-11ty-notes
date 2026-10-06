@@ -41,6 +41,48 @@ module.exports = async function(eleventyConfig) {
     "node_modules/katex/dist/fonts": "katex/fonts",
   });
 
+  // Pandoc-style citations, [@key] or [@key1; @key2], looked up in
+  // src/posts/ref.bib. A note can add its own
+  // files with `bibliography: [path/from/project/root.bib]` in frontmatter.
+  // post.njk formats the citations and lists the cited works under "Bibliography".
+  // Same style as the plugin's demo (https://eleventy-plugin-citations.verou.me/):
+  // [1], [2, 3], [4–7] in the text (ACM SIG Proceedings, citation-style.csl).
+  const { default: citations, Bibliography } = await import("eleventy-plugin-citations");
+  const BIB_FILE = "src/posts/ref.bib";
+  const CITATION_STYLE = "citation-style.csl";
+  eleventyConfig.addPlugin(citations, { bibliography: BIB_FILE, style: CITATION_STYLE });
+
+  // Reading lists: a list item that is only a key, `- @key` (no brackets),
+  // becomes the full entry from the .bib file, without a number and without
+  // going into the Bibliography. If the same work is also cited in the text
+  // with [@key], the item links to its [n] in the Bibliography.
+  // Runs after the `citations` filter in post.njk, so all citations are known.
+  const READING_ITEM = /<li>(\s*<p>)?\s*@([\w:.\/-]+)\s*(<\/p>\s*)?<\/li>/g;
+  eleventyConfig.addFilter("readingList", function (html) {
+    const items = [...String(html).matchAll(READING_ITEM)];
+    if (!items.length) return html;
+
+    const keys = [...new Set(items.map((m) => m[2]))];
+    const bib = new Bibliography([BIB_FILE, ...[].concat(this.ctx.bibliography || [])], {
+      style: CITATION_STYLE,
+      scope: this.page.url,
+    });
+    bib.cite(keys.map((id) => ({ id })));
+    const cited = (this.ctx.references || []).map((reference) => reference.id);
+
+    return String(html).replace(READING_ITEM, (match, p, id) => {
+      const formatted = bib.format(id) || {};
+      const entry = (formatted.entry ?? formatted.html ?? `Missing entry: ${id}`)
+        .replaceAll(/-{3}/g, "—")
+        .replaceAll(/https?:\/\/doi\.org\/(10\.\d{4,9}\/[\w.:\/\(\)-]*\w)/gi,
+          '<a href="https://doi.org/$1" class="doi">$1</a>');
+      const n = cited.indexOf(id);
+      const link = n < 0 ? "" : ` <a href="#bib-${id}" class="reference">[${n + 1}]</a>`;
+      const missing = bib.data?.[id] ? "" : " missing";
+      return `<li class="reading-item${missing}">${entry}${link}</li>`;
+    });
+  });
+
   // Infobox on note pages, filled from frontmatter:
   //   image: plato.jpg            (or [[plato.jpg]], or an https:// URL)
   //   image_caption: Bust of Plato

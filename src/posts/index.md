@@ -1,7 +1,7 @@
 ---
 title: Index
 cdate: 2025-09-20
-mdate: 2026-10-06T10:34
+mdate: 2026-10-06T17:18
 date: Last Modified
 ---
 An attempt to categorise my notebooks
@@ -101,7 +101,7 @@ An attempt to categorise my notebooks
 - [[webserver|Webserver]]
 - [[blog|Blog]]
 - [[localDNS|localDNS]]
-- [[gitworkflow|Git Workflow]]
+- [[git-workflow-forgejo-to-github]]
 
 ## Stories
 - Ramayana

@@ -1,7 +1,7 @@
 ---
 title: Index
 cdate: 2025-09-20
-mdate: 2026-10-05T17:32:00
+mdate: 2026-10-06T10:34
 date: Last Modified
 ---
 An attempt to categorise my notebooks
@@ -82,6 +82,7 @@ An attempt to categorise my notebooks
 - [[7yearsintibet|Seven Years in Tibet]]
 - [[autobiographies|Memoirs and (auto)biographies]]
 - [[haruki-murakami|Haruki Murakami]]
+- [[richard-dawkins|Richard Dawkins]]
 
 ## Misc
 - [[arrangedmarriage|Arranged marriage]]
@@ -100,6 +101,7 @@ An attempt to categorise my notebooks
 - [[webserver|Webserver]]
 - [[blog|Blog]]
 - [[localDNS|localDNS]]
+- [[gitworkflow|Git Workflow]]
 
 ## Stories
 - Ramayana

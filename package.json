@@ -28,6 +28,9 @@
   },
   "keywords": [],
   "overrides": {
-    "chokidar": "5.0.0"
+    "chokidar": "5.0.0",
+    "gray-matter": {
+      "js-yaml": "4.3.2"
+    }
   }
 }

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Git workflow: Forgejo to GitHub · Notebooks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="sigmarootpi">
+
+    <!-- Adding github for IndieAuth -->
+    <link rel="me" href="https://github.com/rishabhstein">
+    
+    <link rel="micropub" href="https://post.sigmarootpi.com/micropub">
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/style.css?v=6.1">
+    
+
+    <!-- Fav and touch icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
+    <link rel="apple-touch-icon" href="/assets/favicon-512.png">
+
+    <link rel="alternate" type="application/rss+xml" title="Rishabh's Blog Feed" href="/feed.xml" />
+
+</head>
+<body>
+    <header class="site-header">
+
+<!-- Site name on every page; each note shows its own title as the page heading -->
+<p class="site-name"><a class="site-title" href="/">Notebooks</a> <span class="site-byline">by <a href="https://rishabhps.com/">Rishabh</a></span></p>
+
+<nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="https://blog.rishabhps.com/">Blog</a>
+    <a href="/search/">Search</a>
+</nav>
+</header>
+
+    <main>
+    
+
+<article class="note" data-pagefind-body>
+<h1 class="note-title" id="top">Git workflow: Forgejo to GitHub</h1>
+<p class="note-meta">
+    <span>Posted 06 Oct 2026</span>
+    <span>Modified 06 Oct 2026, 10:12</span>
+</p>
+
+
+<nav class="toc" aria-label="Contents">
+<details class="toc-inner">
+    <summary>Contents</summary>
+    <ol>
+        <li class="toc-depth-0"><a href="#top">(Top)</a></li>
+        
+        <li class="toc-depth-0"><a href="#overview">Overview</a></li>
+        
+        <li class="toc-depth-0"><a href="#daily-workflow">Daily workflow</a></li>
+        
+        <li class="toc-depth-0"><a href="#one-repo-and-two-remotes-github-and-forgejo">One repo and two remotes: GitHub and Forgejo</a></li>
+        
+        <li class="toc-depth-0"><a href="#set-up-push-mirror-to-github">Set up push mirror to GitHub</a></li>
+        
+        <li class="toc-depth-0"><a href="#deploy-to-gh-pages-and-github-pages">Deploy to gh-pages and GitHub Pages</a></li>
+        
+        <li class="toc-depth-0"><a href="#checklist-for-a-new-site-repo">Checklist for a new site repo</a></li>
+        
+        <li class="toc-depth-0"><a href="#troubleshooting">Troubleshooting</a></li>
+        
+    </ol>
+</details>
+</nav>
+
+
+
+
+<div class="note-body">
+    <h2 id="overview" data-toc="2">Overview</h2>
+<p>Keep a copy of a repo both on Forgejo and Github where Forgejo manages all. I push to Forgejo repo and GitHub receives copies.</p>
+<ul>
+<li>Local clone: <code>origin</code> is Forgejo, <code>github</code> is GitHub (a second remote for emergencies).</li>
+<li>A Forgejo push mirror copies all branches, including <code>gh-pages</code>, to GitHub.</li>
+<li>The runner builds the site and force-pushes <code>_site</code> to <code>gh-pages</code> on Forgejo. GitHub Pages serves that branch.</li>
+<li>Never commit on GitHub directly: the mirror force-pushes and overwrites it.</li>
+</ul>
+<h2 id="daily-workflow" data-toc="2">Daily workflow</h2>
+<ol>
+<li>Commit your changes: <code>git add -A &amp;&amp; git commit -m &quot;message&quot;</code>.</li>
+<li>Push to Forgejo: <code>git push origin master</code> (use <code>main</code> if that is the branch name).</li>
+<li>Forgejo Actions builds the site and updates <code>gh-pages</code>; the mirror copies it to GitHub.</li>
+<li>Check the run in the repo's Actions tab on Forgejo.</li>
+</ol>
+<h2 id="one-repo-and-two-remotes-github-and-forgejo" data-toc="2">One repo and two remotes: GitHub and Forgejo</h2>
+<p>Add a second remote, such as with Forgejo as origin and Github as second remote. It will be useful when one remote is down. How to add:</p>
+<pre><code class="language-bash">git remote add github https://github.com/USER/REPO.git   # once, if missing
+git push github master
+</code></pre>
+<p>When Forgejo is back:</p>
+<ol>
+<li>Run <code>git push origin master</code> once, so Forgejo has the same commits before the mirror syncs again.</li>
+<li>If you edited on GitHub's website meanwhile, run <code>git pull github master</code> first, then push to Forgejo.</li>
+</ol>
+<p>The site does not rebuild while Forgejo is down, because the runner depends on it.</p>
+<h2 id="set-up-push-mirror-to-github" data-toc="2">Set up push mirror to GitHub</h2>
+<ol>
+<li>On GitHub, create a fine-grained token (Settings &gt; Developer settings &gt; Fine-grained tokens). Limit it to the target repo, set Contents to Read and write, and set Workflows to Read and write if the repo has any <code>.github/workflows</code> file. Copy it right away.</li>
+<li>In Forgejo open the repo, then Settings &gt; Repository &gt; Mirror settings &gt; Push mirrors.</li>
+<li>Enter <code>https://github.com/USER/REPO.git</code>, your GitHub username, and the token as the password. Turn on &quot;Sync when commits are pushed&quot;.</li>
+<li>Click Add push mirror, then Synchronize now.</li>
+</ol>
+<p>The mirror force-pushes, so anything that exists only on GitHub is lost. Fine-grained tokens expire; create a new one and update it here before the date.</p>
+<h2 id="deploy-to-gh-pages-and-github-pages" data-toc="2">Deploy to gh-pages and GitHub Pages</h2>
+<p>The workflow <code>.forgejo/workflows/deploy.yml</code> (with <code>runs-on: docker</code>) runs <code>npm ci</code> and <code>npm run build</code>, then force-pushes <code>_site</code> to the <code>gh-pages</code> branch on Forgejo using the secret <code>FORGEJO_TOKEN</code>. The mirror then copies that branch to GitHub.</p>
+<ul>
+<li>On GitHub: repo Settings &gt; Pages &gt; Deploy from a branch &gt; <code>gh-pages</code> / root.</li>
+<li>Forgejo repo variables: <code>SITE_URL</code> (for example <code>https://USER.github.io/REPO</code>), <code>SITE_PATH_PREFIX</code> (defaults to <code>/REPO/</code>, use <code>/</code> with a custom domain), <code>SITE_CNAME</code> (custom domain only).</li>
+<li>Delete any old <code>.github/workflows</code> file, or GitHub runs it too and the Forgejo-only steps conflict.</li>
+<li><code>gh-pages</code> holds only the latest build, since each deploy replaces its history.</li>
+</ul>
+<h2 id="checklist-for-a-new-site-repo" data-toc="2">Checklist for a new site repo</h2>
+<ol>
+<li>Create an empty repo in Forgejo and push the code (<code>git push -u origin --all</code>).</li>
+<li>Create the matching empty repo on GitHub.</li>
+<li>Add <code>.forgejo/workflows/deploy.yml</code> and delete <code>.github/workflows/</code>.</li>
+<li>Add the secret <code>FORGEJO_TOKEN</code> (Forgejo access token with repository read and write).</li>
+<li>Add the variable <code>SITE_URL</code> (and <code>SITE_CNAME</code> for a custom domain).</li>
+<li>Create a GitHub token that covers the new repo and add the push mirror.</li>
+<li>Set GitHub Pages to deploy from the <code>gh-pages</code> branch.</li>
+<li>Push a commit and watch the Actions tab on Forgejo.</li>
+</ol>
+<h2 id="troubleshooting" data-toc="2">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src refspec all does not match any</code></td>
+<td><code>--all</code> typed with a long dash</td>
+<td>Retype <code>git push -u origin --all</code> by hand</td>
+</tr>
+<tr>
+<td>Mirror sync gives 403</td>
+<td>GitHub token lacks Contents or Workflows write, or does not cover the repo</td>
+<td>Edit the token, then Synchronize now</td>
+</tr>
+<tr>
+<td>Job stuck on &quot;Waiting for a runner with label: docker&quot;</td>
+<td>No runner online</td>
+<td>Check <code>docker logs forgejo-runner</code> and the runner UUID and token</td>
+</tr>
+<tr>
+<td>Checkout fails with &quot;Could not resolve host: forgejo&quot;</td>
+<td>Job container is not on the Forgejo network</td>
+<td>Use the public URL in the runner config, or set its container network</td>
+</tr>
+<tr>
+<td>Runner logs show 502 Bad Gateway</td>
+<td>The reverse proxy cannot reach Forgejo</td>
+<td>Point the runner at the internal address instead of the proxy</td>
+</tr>
+<tr>
+<td><code>&lt;jemalloc&gt;: Unsupported system page size</code> during Pagefind</td>
+<td>Pi 5 uses 16 KB memory pages</td>
+<td>Build Pagefind with a compatible page size in a custom image. Do not change the Pi kernel</td>
+</tr>
+<tr>
+<td>Browser opens <code>/i/</code> and shows 404</td>
+<td>Chromium address bar autocomplete</td>
+<td>Press Delete on the suggestion, or clear the site's cache</td>
+</tr>
+<tr>
+<td>Push to GitHub rejected or history lost</td>
+<td>Commits made on GitHub, then overwritten by the mirror</td>
+<td>Commit only to Forgejo; pull from GitHub before pushing if you must edit there</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Generated by Claude</p>
+
+    
+</div>
+
+<footer class="note-footer">
+    <a href='mailto:sigmarootpi@proton.me?subject=Blogentry: Git workflow: Forgejo to GitHub'>Reply via email</a>
+</footer>
+</article>
+
+
+<script>
+  // Contents: always open beside the text on wide screens, collapsed above it
+  // otherwise; highlight the section currently being read
+  (function () {
+    var details = document.querySelector(".toc-inner");
+    var wide = window.matchMedia("(min-width: 1340px)");
+    function sync() { details.open = wide.matches; }
+    sync();
+    wide.addEventListener("change", sync);
+
+    var links = {};
+    document.querySelectorAll(".toc a").forEach(function (a) { links[a.hash.slice(1)] = a; });
+    var targets = Object.keys(links).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    function update() {
+      var current = targets[0];
+      targets.forEach(function (t) { if (t.getBoundingClientRect().top < 120) current = t; });
+      Object.keys(links).forEach(function (id) { links[id].classList.toggle("active", current && id === current.id); });
+    }
+    document.addEventListener("scroll", update, { passive: true });
+    update();
+  })();
+</script>
+
+
+    </main>
+    <footer class="site-footer">
+    <p>contact me: sigmarootpi [at] proton [dot] me</p>
+    <p class="site-colophon">
+        Last built 07 Oct 2026, 08:10 UTC
+        · commit <a href="https://github.com/rishabhstein/git-11ty-notes/commit/fa8454d82a0eeb2996123087aa3133b0d8b3eb62">fa8454d</a>
+        · Powered by <a href="https://www.11ty.dev/">Eleventy</a>
+        · <a href="https://www.flaticon.com/free-icons/ascetic" title="ascetic icons">Ascetic icon from Flaticon</a>
+        <br>
+        © 2024–2026 Rishabh P. Sharma · Notes licensed under
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a>
+    </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Thales of Miletus · Notebooks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="sigmarootpi">
+
+    <!-- Adding github for IndieAuth -->
+    <link rel="me" href="https://github.com/rishabhstein">
+    
+    <link rel="micropub" href="https://post.sigmarootpi.com/micropub">
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/style.css?v=6.1">
+    
+
+    <!-- Fav and touch icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
+    <link rel="apple-touch-icon" href="/assets/favicon-512.png">
+
+    <link rel="alternate" type="application/rss+xml" title="Rishabh's Blog Feed" href="/feed.xml" />
+
+</head>
+<body>
+    <header class="site-header">
+
+<!-- Site name on every page; each note shows its own title as the page heading -->
+<p class="site-name"><a class="site-title" href="/">Notebooks</a> <span class="site-byline">by <a href="https://rishabhps.com/">Rishabh</a></span></p>
+
+<nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="https://blog.rishabhps.com/">Blog</a>
+    <a href="/search/">Search</a>
+</nav>
+</header>
+
+    <main>
+    
+
+<article class="note" data-pagefind-body>
+<h1 class="note-title" id="top">Thales of Miletus</h1>
+<p class="note-meta">
+    <span>Posted 04 Oct 2024</span>
+    <span>Modified 03 Oct 2026, 17:52</span>
+</p>
+
+
+<nav class="toc" aria-label="Contents">
+<details class="toc-inner">
+    <summary>Contents</summary>
+    <ol>
+        <li class="toc-depth-0"><a href="#top">(Top)</a></li>
+        
+        <li class="toc-depth-0"><a href="#references">References</a></li>
+        
+    </ol>
+</details>
+</nav>
+
+
+
+<aside class="infobox">
+<div class="infobox-inner">
+    <div class="infobox-title">Thales of Miletus</div>
+    
+    <figure>
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Arte_romana%2C_testa_di_talete_di_mileto%2C_II_sec..JPG/330px-Arte_romana%2C_testa_di_talete_di_mileto%2C_II_sec..JPG" alt="Roman bust of Thales, 2nd century" loading="lazy">
+        <figcaption>Roman bust of Thales, 2nd century</figcaption>
+    </figure>
+    
+    
+    <table>
+        
+        <tr>
+            <th scope="row">Born</th><td>c. 624 BCE, Miletus</td>
+            
+        </tr>
+        
+        <tr>
+            <th scope="row">Died</th><td>c. 546 BCE</td>
+            
+        </tr>
+        
+        <tr>
+            <th scope="row">School</th><td>Milesian</td>
+            
+        </tr>
+        
+        <tr>
+            <th scope="row">Known for</th><td>Water as the arche, first Greek philosopher</td>
+            
+        </tr>
+        
+        <tr>
+            <th scope="row">Students</th><td><a href="/posts/anaximander/">Anaximander</a></td>
+            
+        </tr>
+        
+    </table>
+    
+</div>
+</aside>
+
+
+<div class="note-body">
+    <p>A <em>pre-Socratic</em> Greek philosopher from Miletus—a town of present day Turkey—(existed around the same time as <a href="/posts/anaximenes/">Anaximenes</a> and <a href="/posts/anaximander/">Anaximander</a>). He is often referred as <strong>the first philosopher</strong> who claimed:</p>
+<blockquote>
+<p>Source of all things is water.</p>
+</blockquote>
+<p>Both statements are vague. The former assumes there were no philosophers before him, which seems unlikely. What about philosophers from other cultures, such as Tao, <a href="/posts/charvaka/">Charvaka</a>, <a href="/posts/ajivika/">Ajivika</a> and other unknown philosophers? The second statement doesn’t explain what does it mean that &quot;source of all things is water&quot;.</p>
+<p>Are we made of water? Is all matter just water? These questions further complicates things and lead to more questions such as What is this water made of? What about atoms? <a href="/posts/democritus/">Democritus</a> from Greece and <a href="/posts/kanada/">Kanada</a> from India—as far as I remember after Thales—proposed the idea of atoms, independently.</p>
+<p>He was an extensive traveller and said to have calculated the height of pyramids in Egypt by measuring shadows around 585 B.C. <a href="#1" class="cite-ref">1</a></p>
+<p class="refs-title" id="references" data-toc="label">References</p>
+<ol class="refs-list">
+<li><a name="1"></a>Sophie's World by Jostein Gaarder</li>
+</ol>
+
+    
+</div>
+
+<footer class="note-footer">
+    <a href='mailto:sigmarootpi@proton.me?subject=Blogentry: Thales of Miletus'>Reply via email</a>
+</footer>
+</article>
+
+
+<script>
+  // Contents: always open beside the text on wide screens, collapsed above it
+  // otherwise; highlight the section currently being read
+  (function () {
+    var details = document.querySelector(".toc-inner");
+    var wide = window.matchMedia("(min-width: 1340px)");
+    function sync() { details.open = wide.matches; }
+    sync();
+    wide.addEventListener("change", sync);
+
+    var links = {};
+    document.querySelectorAll(".toc a").forEach(function (a) { links[a.hash.slice(1)] = a; });
+    var targets = Object.keys(links).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    function update() {
+      var current = targets[0];
+      targets.forEach(function (t) { if (t.getBoundingClientRect().top < 120) current = t; });
+      Object.keys(links).forEach(function (id) { links[id].classList.toggle("active", current && id === current.id); });
+    }
+    document.addEventListener("scroll", update, { passive: true });
+    update();
+  })();
+</script>
+
+
+    </main>
+    <footer class="site-footer">
+    <p>contact me: sigmarootpi [at] proton [dot] me</p>
+    <p class="site-colophon">
+        Last built 07 Oct 2026, 08:10 UTC
+        · commit <a href="https://github.com/rishabhstein/git-11ty-notes/commit/fa8454d82a0eeb2996123087aa3133b0d8b3eb62">fa8454d</a>
+        · Powered by <a href="https://www.11ty.dev/">Eleventy</a>
+        · <a href="https://www.flaticon.com/free-icons/ascetic" title="ascetic icons">Ascetic icon from Flaticon</a>
+        <br>
+        © 2024–2026 Rishabh P. Sharma · Notes licensed under
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a>
+    </p>
+</footer>
+
+</body>
+</html>

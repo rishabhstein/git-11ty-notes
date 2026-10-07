@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Atom (paramanu) · Notebooks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="sigmarootpi">
+
+    <!-- Adding github for IndieAuth -->
+    <link rel="me" href="https://github.com/rishabhstein">
+    
+    <link rel="micropub" href="https://post.sigmarootpi.com/micropub">
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/style.css?v=6.1">
+    
+
+    <!-- Fav and touch icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
+    <link rel="apple-touch-icon" href="/assets/favicon-512.png">
+
+    <link rel="alternate" type="application/rss+xml" title="Rishabh's Blog Feed" href="/feed.xml" />
+
+</head>
+<body>
+    <header class="site-header">
+
+<!-- Site name on every page; each note shows its own title as the page heading -->
+<p class="site-name"><a class="site-title" href="/">Notebooks</a> <span class="site-byline">by <a href="https://rishabhps.com/">Rishabh</a></span></p>
+
+<nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="https://blog.rishabhps.com/">Blog</a>
+    <a href="/search/">Search</a>
+</nav>
+</header>
+
+    <main>
+    
+
+<article class="note" data-pagefind-body>
+<h1 class="note-title" id="top">Atom (paramanu)</h1>
+<p class="note-meta">
+    <span>Posted 14 Oct 2024</span>
+    <span>Modified 10 Nov 2025, 19:01</span>
+</p>
+
+
+<nav class="toc" aria-label="Contents">
+<details class="toc-inner">
+    <summary>Contents</summary>
+    <ol>
+        <li class="toc-depth-0"><a href="#top">(Top)</a></li>
+        
+        <li class="toc-depth-0"><a href="#see-also">See also</a></li>
+        
+    </ol>
+</details>
+</nav>
+
+
+
+
+<div class="note-body">
+    <p>The idea of a fundamental particle (maybe unit) seems to be originated in Greek and Indian philosophy independently. In Greek philosophy, <a href="/posts/democritus/">Democritus</a> suggested the idea of atom around 400-300 BCE, while in <a href="/posts/indianphilosophy/">Indian Philosophy</a>, It was <a href="/posts/kanada/">Kanada</a> who proposed the idea of paramanu (Atom) around 600-200 BCE.</p>
+<p>However, both ideas of atom are very different. <a href="/posts/democritus/">Democritus's</a> atom has no qualitative differences, while <a href="/posts/kanada/">Kanada's</a> atom differed both quantitatively and qualitatively.</p>
+<p class="section-label" id="see-also" data-toc="label">See also:</p>
+<ul>
+<li><a href="https://arxiv.org/pdf/0712.0764">The Conception of the Atom in Greek and Indian Physics</a></li>
+</ul>
+
+    
+</div>
+
+<footer class="note-footer">
+    <a href='mailto:sigmarootpi@proton.me?subject=Blogentry: Atom (paramanu)'>Reply via email</a>
+</footer>
+</article>
+
+
+<script>
+  // Contents: always open beside the text on wide screens, collapsed above it
+  // otherwise; highlight the section currently being read
+  (function () {
+    var details = document.querySelector(".toc-inner");
+    var wide = window.matchMedia("(min-width: 1340px)");
+    function sync() { details.open = wide.matches; }
+    sync();
+    wide.addEventListener("change", sync);
+
+    var links = {};
+    document.querySelectorAll(".toc a").forEach(function (a) { links[a.hash.slice(1)] = a; });
+    var targets = Object.keys(links).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    function update() {
+      var current = targets[0];
+      targets.forEach(function (t) { if (t.getBoundingClientRect().top < 120) current = t; });
+      Object.keys(links).forEach(function (id) { links[id].classList.toggle("active", current && id === current.id); });
+    }
+    document.addEventListener("scroll", update, { passive: true });
+    update();
+  })();
+</script>
+
+
+    </main>
+    <footer class="site-footer">
+    <p>contact me: sigmarootpi [at] proton [dot] me</p>
+    <p class="site-colophon">
+        Last built 07 Oct 2026, 08:10 UTC
+        · commit <a href="https://github.com/rishabhstein/git-11ty-notes/commit/fa8454d82a0eeb2996123087aa3133b0d8b3eb62">fa8454d</a>
+        · Powered by <a href="https://www.11ty.dev/">Eleventy</a>
+        · <a href="https://www.flaticon.com/free-icons/ascetic" title="ascetic icons">Ascetic icon from Flaticon</a>
+        <br>
+        © 2024–2026 Rishabh P. Sharma · Notes licensed under
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a>
+    </p>
+</footer>
+
+</body>
+</html>

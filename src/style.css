@@ -1224,7 +1224,8 @@ a.doi::before {
   position: relative;
 }
 
-.infobox-inner {
+.infobox-inner,
+.note-figure {
   border: 1px solid var(--color-border-soft);
   border-radius: 6px;
   background-color: var(--color-surface);
@@ -1246,7 +1247,8 @@ a.doi::before {
 
 /* Any image size: keeps its aspect ratio, never wider than the card, never
    taller than 320px (or 45% of the screen), and never enlarged past its own size */
-.infobox img {
+.infobox img,
+.note-body .note-figure img {
   display: block;
   width: auto;
   height: auto;
@@ -1256,7 +1258,8 @@ a.doi::before {
   border-radius: 4px;
 }
 
-.infobox figcaption {
+.infobox figcaption,
+.note-figure figcaption {
   margin-top: 0.35em;
   font-size: 0.8rem;
   color: var(--color-code-gray-dark);
@@ -1285,11 +1288,24 @@ a.doi::before {
   color: var(--color-text-soft);
 }
 
+/* Captioned images in the text, ![caption](image.jpg) alone on a line: the
+   same card as the infobox (see src/utils/figures.js) */
+.note-figure {
+  margin: 1em 0;
+}
+
 @media (min-width: 700px) {
-  .infobox {
+  .infobox,
+  .note-figure {
     float: right;
+    clear: right;
     width: 250px;
     margin: 0 0 1em 1.5em;
+  }
+
+  .note-figure {
+    box-sizing: border-box;
+    margin-top: 0.25em;
   }
 
   /* Boxes with a background or border stop beside the card instead of

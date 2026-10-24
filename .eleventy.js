@@ -5,6 +5,7 @@ const markdownItFootnote = require("markdown-it-footnote");
 const markdownItMark = require("markdown-it-mark");
 const { noteReferences } = require("./src/utils/note-references");
 const { headingIds, tableOfContents } = require("./src/utils/table-of-contents");
+const { figures } = require("./src/utils/figures");
 
 
 module.exports = async function(eleventyConfig) {
@@ -29,7 +30,7 @@ module.exports = async function(eleventyConfig) {
   eleventyConfig.amendLibrary("md", (md) => {
     md.set({ linkify: true });
     md.linkify.set({ fuzzyLink: false });
-    md.use(katex).use(markdownItFootnote).use(markdownItMark).use(noteReferences).use(headingIds);
+    md.use(katex).use(markdownItFootnote).use(markdownItMark).use(noteReferences).use(headingIds).use(figures);
     // Footnote markers as plain numbers ("1", "2:1") instead of "[1]"
     md.renderer.rules.footnote_caption = (tokens, idx) => {
       const { id, subId } = tokens[idx].meta;
@@ -196,7 +197,7 @@ module.exports = async function(eleventyConfig) {
     // Add Pagefind after build hook here
   eleventyConfig.on('eleventy.after', () => {
     console.log("Running Pagefind...");
-    execSync(`npx pagefind --source _site --glob "**/*.html"`, { encoding: 'utf-8' });
+    execSync(`npx pagefind --site _site --glob "**/*.html"`, { encoding: 'utf-8' });
     console.log("Pagefind finished.");
   });
 

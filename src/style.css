@@ -1218,9 +1218,8 @@ a.doi::before {
   scroll-margin-top: 1em;
 }
 
-/* Infobox (image and facts from frontmatter). On wide screens it hangs off the
-   right edge of the centred column, mirroring "Visit today" on the homepage;
-   on medium screens it floats right inside the text; on phones it sits on top. */
+/* Infobox (image and facts from frontmatter). It floats right inside the text,
+   which wraps around it as on Wikipedia; on phones it sits on top. */
 .note {
   position: relative;
 }
@@ -1286,23 +1285,7 @@ a.doi::before {
   color: var(--color-text-soft);
 }
 
-@media (min-width: 1340px) {
-  .infobox {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 100%;
-    width: 240px;
-    margin-left: 40px;
-  }
-
-  .infobox-inner {
-    position: sticky;
-    top: 1em;
-  }
-}
-
-@media (min-width: 700px) and (max-width: 1339px) {
+@media (min-width: 700px) {
   .infobox {
     float: right;
     width: 250px;
@@ -1326,6 +1309,37 @@ a.doi::before {
     margin-bottom: 1em;
   }
 
+}
+
+/* Bibliography. On wide screens its entries are sidenotes in the right margin,
+   each beside the line where it is first cited (placed by the script in
+   post.njk); otherwise it closes the note. */
+@media (min-width: 1340px) {
+  .bibliography {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 260px;
+    margin-left: 40px;
+  }
+
+  .note-body .bibliography .refs-title {
+    display: none;
+  }
+
+  .note-body .bibliography dl.references {
+    display: block;
+  }
+
+  .note-body .bibliography dl.references > div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 0.6em;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
 }
 
 .note-footer {

@@ -72,7 +72,7 @@ I consider this website as a <a href="https://en.wikipedia.org/wiki/Commonplace_
 <input type="search" class="notes-filter" placeholder="Search notes…" aria-label="Search notes by title" autocomplete="off">
 </div>
 
-{# Grouped by the categories in the Index note (src/posts/index.md) #}
+{# Grouped by SilverBullet folder (src/posts/<Folder>/), see "categories" in .eleventy.js #}
 <div class="notes-view" data-view="categories">
 {% for group in collections.categories %}
 {% set popoverId = "category-" + (group.name | slugify) %}

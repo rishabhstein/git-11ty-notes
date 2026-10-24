@@ -1,5 +1,5 @@
 const { execSync } = require("child_process");
-const fs = require("fs");
+const path = require("path");
 const { indexVault, obsidianLinks } = require("./src/utils/obsidian-links");
 const markdownItFootnote = require("markdown-it-footnote");
 const markdownItMark = require("markdown-it-mark");
@@ -161,45 +161,28 @@ module.exports = async function(eleventyConfig) {
     );
   eleventyConfig.addCollection("notes", notesByModified);
 
-  // Notes grouped by the "## Category" headings and links in the index note
-  // (src/posts/index.md), so categories are maintained in Obsidian. Notes not
-  // listed there go into a final group so they stay visible.
-  const CATEGORY_NOTE = "src/posts/index.md";
+  // Notes grouped by their SilverBullet folder (src/posts/Physics/... -> "Physics"),
+  // in the same order as notebook.groupOrder in SilverBullet's Library/Personal/Index.md.
+  // Folders not listed follow alphabetically; notes outside any folder go into a
+  // final group so they stay visible.
+  const GROUP_ORDER = ["Patterns", "Physics", "Philosophy", "India", "Origins", "People", "Life", "Code", "Misc", "Inbox"];
   eleventyConfig.addCollection("categories", (collectionApi) => {
-    const noteKey = (target) => {
-      let name = target.trim();
-      try {
-        name = decodeURIComponent(name);
-      } catch {}
-      name = name.split("#")[0].replace(/\/+$/, "").split("/").pop().replace(/\.md$/, "");
-      return name.normalize("NFC").toLowerCase();
-    };
-    const notes = notesByModified(collectionApi).filter((note) => note.inputPath !== "./" + CATEGORY_NOTE);
-    const byKey = new Map(notes.map((note) => [noteKey(note.fileSlug), note]));
-
-    const groups = [];
-    const sorted = new Set();
-    for (const line of fs.readFileSync(CATEGORY_NOTE, "utf-8").split("\n")) {
-      const heading = line.match(/^##\s+(.+?)\s*$/);
-      if (heading) {
-        groups.push({ name: heading[1], keys: new Set() });
+    const groups = new Map();
+    const unsorted = [];
+    for (const note of notesByModified(collectionApi)) {
+      const parts = path.relative("src/posts", note.inputPath).split(path.sep);
+      if (parts.length < 2) {
+        unsorted.push(note);
         continue;
       }
-      if (!groups.length) continue;
-      // [[note]], [[note|alias]] or [text](note.md)
-      for (const match of line.matchAll(/\[\[([^\]|]+)(?:\|[^\]]*)?\]\]|\]\(([^)]+)\)/g)) {
-        const key = noteKey(match[1] || match[2]);
-        if (byKey.has(key)) {
-          groups.at(-1).keys.add(key);
-          sorted.add(key);
-        }
-      }
+      if (!groups.has(parts[0])) groups.set(parts[0], []);
+      groups.get(parts[0]).push(note);
     }
 
-    const result = groups
-      .map(({ name, keys }) => ({ name, notes: notes.filter((note) => keys.has(noteKey(note.fileSlug))) }))
-      .filter((group) => group.notes.length);
-    const unsorted = notes.filter((note) => !sorted.has(noteKey(note.fileSlug)));
+    const rank = (name) => (GROUP_ORDER.includes(name) ? GROUP_ORDER.indexOf(name) : GROUP_ORDER.length);
+    const result = [...groups]
+      .sort(([a], [b]) => rank(a) - rank(b) || a.localeCompare(b))
+      .map(([name, notes]) => ({ name, notes }));
     if (unsorted.length) result.push({ name: "Not yet sorted", notes: unsorted, unsorted: true });
     return result;
   });

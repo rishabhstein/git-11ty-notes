@@ -1,0 +1,19 @@
+---
+title: Haruki Murakami
+cdate: 2026-10-05
+mdate: 2025-10-05T17:13
+date: Last Modified
+tags:
+  - writer
+  - fiction
+---
+
+A popular Japanese writer known for his fiction, got his fame in 80s. His writing style reflects young energy, as he often delves into topics appealing to young adults, namely romance, sex, loneliness, and struggle of finding dates. Based on the three books I have read where I wrote about them [here](https://blog.rishabhps.com/books/2026-09-22-hear-the-wind-sing/), [here](https://blog.rishabhps.com/books/2026-09-26-what-i-talk-about-when-i-talk-about-running/), and [here](https://blog.rishabhps.com/books/2026-10-05-after-the-qwake/), he seems to portray his struggles in his characters. He talks about his struggles and his journey to become a novelist from a bar owner in his memoir [What I talk about when I talk about running](https://blog.rishabhps.com/books/2026-09-26-what-i-talk-about-when-i-talk-about-running/), which gives a farely clear idea of how he thinks.
+
+### See also: 
+- [[People/Richard-dawkins]]
+- [[People/Kierkegaard]]
+  
+### Recommended
+- [*After the Quake*](https://blog.rishabhps.com/books/2026-10-05-after-the-quake/) by Haruki Murakami
+- [*What I Talk About When I Talk About Running*](https://blog.rishabhps.com/books/2026-09-26-what-i-talk-about-when-i-talk-about-running/) by Haruki Murakami

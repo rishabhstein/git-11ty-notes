@@ -52,6 +52,7 @@
     {{ content | citations | readingList | safe }}
     {% if references.length %}
     <section class="bibliography">
+    <div class="bibliography-inner">
         <h2 class="refs-title" id="bibliography">Bibliography</h2>
         <dl class="references">
             {% for reference in references %}
@@ -68,6 +69,7 @@
             </div>
             {% endfor %}
         </dl>
+    </div>
     </section>
     {% endif %}
 </div>
@@ -76,6 +78,37 @@
     <a href='mailto:sigmarootpi@proton.me?subject=Blogentry: {{ title }}'>Reply via email</a>
 </footer>
 </article>
+
+{% if references.length %}
+<script>
+  // Wide screens: put each bibliography entry beside the line where it is first
+  // cited, pushed down only as far as needed to clear the entry above it
+  (function () {
+    var section = document.querySelector(".bibliography");
+    var entries = section.querySelectorAll("dl.references > div");
+    var wide = window.matchMedia("(min-width: 1340px)");
+    var gap = 12;
+
+    function place() {
+      var bottom = 0;
+      entries.forEach(function (entry) {
+        if (!wide.matches) { entry.style.top = ""; return; }
+        var cite = document.querySelector('.note-body a.reference[href="#' + entry.id + '"]:not(.bibliography a)');
+        var top = cite
+          ? cite.getBoundingClientRect().top - section.getBoundingClientRect().top
+          : bottom;
+        top = Math.max(top, bottom);
+        entry.style.top = top + "px";
+        bottom = top + entry.offsetHeight + gap;
+      });
+    }
+    place();
+    wide.addEventListener("change", place);
+    // Images, maths and fonts change where the citations end up
+    new ResizeObserver(place).observe(document.querySelector(".note-body"));
+  })();
+</script>
+{% endif %}
 
 {% if toc.length %}
 <script>

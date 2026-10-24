@@ -30,12 +30,16 @@ function indexVault(srcDir, notesDir, publicDir) {
   const attachments = new Map();
   const notesUrl = "/" + path.relative(srcDir, notesDir).split(path.sep).join("/") + "/";
 
+  // Notes can sit in folders (SilverBullet's Physics/peclet-number.md), but their
+  // pages stay flat (/posts/peclet-number/, see posts.json), so both
+  // [[Physics/peclet-number]] and [[peclet-number]] find them
   for (const file of walk(notesDir)) {
-    const name = path.basename(file);
-    if (path.resolve(path.dirname(file)) === path.resolve(notesDir) && name.endsWith(".md")) {
-      const slug = name.slice(0, -3);
-      notes.set(key(slug), slug === "index" ? notesUrl : `${notesUrl}${slug}/`);
-    }
+    if (!file.endsWith(".md")) continue;
+    const rel = path.relative(notesDir, file).split(path.sep).join("/").slice(0, -3);
+    const slug = path.basename(rel);
+    const url = rel === "index" ? notesUrl : `${notesUrl}${slug}/`;
+    notes.set(key(rel), url);
+    if (!notes.has(key(slug))) notes.set(key(slug), url);
   }
   for (const file of walk(publicDir)) {
     const name = path.basename(file);
@@ -55,7 +59,7 @@ function obsidianLinks(md, { notes, attachments }) {
   const warn = (env, msg) => console.warn(`[obsidian-links] ${where(env)}: ${msg}`);
 
   const noteUrl = (name, heading) => {
-    const url = notes.get(key(name.trim()));
+    const url = notes.get(key(name.trim())) || notes.get(key(path.posix.basename(name.trim())));
     return url ? encodePath(url) + headingAnchor(heading) : null;
   };
 
@@ -107,7 +111,8 @@ function obsidianLinks(md, { notes, attachments }) {
           ? `<video controls${attrs}></video>`
           : `<img${attrs} alt="${alt}" loading="lazy">`;
       } else {
-        const text = (label || target).trim();
+        // [[Philosophy/religion]] reads "religion", as in SilverBullet
+        const text = (label || target.slice(name.lastIndexOf("/") + 1)).trim();
         const url = noteUrl(name, heading);
         if (url) {
           state.push("link_open", "a", 1).attrs = [["href", url]];

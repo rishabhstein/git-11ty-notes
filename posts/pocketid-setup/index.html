@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Deploy apps using Pocketid · Notebooks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="sigmarootpi">
+
+    <!-- Adding github for IndieAuth -->
+    <link rel="me" href="https://github.com/rishabhstein">
+    
+    <link rel="micropub" href="https://post.sigmarootpi.com/micropub">
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/style.css?v=6.1">
+    
+
+    <!-- Fav and touch icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
+    <link rel="apple-touch-icon" href="/assets/favicon-512.png">
+
+    <link rel="alternate" type="application/rss+xml" title="Rishabh's Blog Feed" href="/feed.xml" />
+
+</head>
+<body>
+    <header class="site-header">
+
+<!-- Site name on every page; each note shows its own title as the page heading -->
+<p class="site-name"><a class="site-title" href="/">Notebooks</a> <span class="site-byline">by <a href="https://rishabhps.com/">Rishabh</a></span></p>
+
+<nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="https://blog.rishabhps.com/">Blog</a>
+    <a href="/search/">Search</a>
+</nav>
+</header>
+
+    <main>
+    
+
+<article class="note" data-pagefind-body>
+<h1 class="note-title" id="top">Deploy apps using Pocketid</h1>
+<p class="note-meta">
+    <span>Posted 11 Oct 2026</span>
+    <span>Modified 11 Oct 2026, 18:37</span>
+</p>
+
+
+<nav class="toc" aria-label="Contents">
+<details class="toc-inner">
+    <summary>Contents</summary>
+    <ol>
+        <li class="toc-depth-0"><a href="#top">(Top)</a></li>
+        
+        <li class="toc-depth-0"><a href="#deploying-an-app-with-pocket-id">Deploying an App with Pocket ID</a></li>
+        
+        <li class="toc-depth-1"><a href="#overview">Overview</a></li>
+        
+        <li class="toc-depth-1"><a href="#step-1-deploy-the-app">Step 1 — Deploy the app</a></li>
+        
+        <li class="toc-depth-1"><a href="#step-2-add-the-app-to-caddy">Step 2 — Add the app to Caddy</a></li>
+        
+        <li class="toc-depth-1"><a href="#step-3-register-the-app-in-pocket-id">Step 3 — Register the app in Pocket ID</a></li>
+        
+        <li class="toc-depth-1"><a href="#step-4-configure-oidc-in-the-app">Step 4 — Configure OIDC in the app</a></li>
+        
+        <li class="toc-depth-1"><a href="#step-5-match-your-existing-account">Step 5 — Match your existing account</a></li>
+        
+        <li class="toc-depth-1"><a href="#step-6-test-then-lock-down-optional">Step 6 — Test, then lock down (optional)</a></li>
+        
+    </ol>
+</details>
+</nav>
+
+
+
+
+<div class="note-body">
+    <h1 id="deploying-an-app-with-pocket-id" data-toc="1">Deploying an App with Pocket ID</h1>
+<h2 id="overview" data-toc="2">Overview</h2>
+<p>Every app follows the same six steps: deploy, add to Caddy, register in Pocket ID, configure OIDC in the app, match the account, then test.</p>
+<p>Placeholders used below:</p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>example.com</code></td>
+<td>Your domain</td>
+</tr>
+<tr>
+<td><code>id.example.com</code></td>
+<td>Pocket ID</td>
+</tr>
+<tr>
+<td><code>app.example.com</code></td>
+<td>The app being added</td>
+</tr>
+<tr>
+<td><code>APP-NAME</code></td>
+<td>App folder and container name</td>
+</tr>
+<tr>
+<td><code>APP_PORT</code></td>
+<td>Host port the app listens on</td>
+</tr>
+</tbody>
+</table>
+<p>Assumed setup: Caddy runs on the host network and proxies to <code>localhost:PORT</code>; DNS points to the Tailscale IP; Pocket ID runs at <code>id.example.com</code>.</p>
+<p>How a login works:</p>
+<ol>
+<li>You click &quot;Login with Pocket ID&quot; in the app.</li>
+<li>The browser goes to Pocket ID, where you use your passkey.</li>
+<li>Pocket ID sends the browser back to the app with a one-time code.</li>
+<li>The app's container checks that code with Pocket ID directly. This server-to-server step is why the container must reach <code>id.example.com</code> (Step 1).</li>
+</ol>
+<h2 id="step-1-deploy-the-app" data-toc="2">Step 1 — Deploy the app</h2>
+<p>Use the usual conventions, and add <code>extra_hosts</code> so the container can reach Pocket ID through Caddy on the host.</p>
+<pre><code class="language-yaml">services:
+  APP-NAME:
+    image: &lt;image&gt;
+    container_name: APP-NAME
+    restart: unless-stopped
+    ports:
+      - &quot;${APP_PORT}:&lt;container-port&gt;&quot;
+    environment:
+      - TZ=Europe/Brussels
+      # OIDC variables go here (Step 4)
+    volumes:
+      - /home/rpi/portainer/Files/AppData/Config/APP-NAME/data:/data
+    extra_hosts:
+      - &quot;id.example.com:host-gateway&quot;
+    networks:
+      - media
+
+networks:
+  media:
+    external: true
+</code></pre>
+<ul>
+<li>Keep secrets (client ID, client secret) in the stack's <code>.env</code>.</li>
+<li><code>extra_hosts</code> points <code>id.example.com</code> at the Pi itself, where Caddy listens. The certificate stays valid because the name is unchanged.</li>
+<li>To make the app reachable only through Caddy, bind the port as <code>&quot;127.0.0.1:${APP_PORT}:&lt;container-port&gt;&quot;</code>.</li>
+</ul>
+<h2 id="step-2-add-the-app-to-caddy" data-toc="2">Step 2 — Add the app to Caddy</h2>
+<p>Caddy is on the host network, so it proxies to <code>localhost</code> and the host port.</p>
+<pre><code>app.example.com {
+    reverse_proxy localhost:APP_PORT
+}
+</code></pre>
+<p>Reload Caddy, then confirm <code>https://app.example.com</code> opens before going further.</p>
+<h2 id="step-3-register-the-app-in-pocket-id" data-toc="2">Step 3 — Register the app in Pocket ID</h2>
+<ol>
+<li>Go to <strong>Administration → OIDC Clients → Add</strong>.</li>
+<li><strong>Name:</strong> the app's name (shown on the Pocket ID dashboard).</li>
+<li><strong>Callback URL:</strong> taken from the app's docs. It always starts with <code>https://app.example.com/...</code>.</li>
+<li>Save, then copy the <strong>Client ID</strong> and <strong>Client Secret</strong> into the app's <code>.env</code>.</li>
+<li>Open the client's <strong>Access</strong> tab and choose <strong>All Users</strong>, or tick a group.</li>
+</ol>
+<p>A new client starts with no group ticked, so nobody can log in until the Access tab is set.</p>
+<h2 id="step-4-configure-oidc-in-the-app" data-toc="2">Step 4 — Configure OIDC in the app</h2>
+<p>Apps ask for the same few values, either in their settings page or as environment variables.</p>
+<table>
+<thead>
+<tr>
+<th>Field the app asks for</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client ID / Secret</td>
+<td>From Step 3</td>
+</tr>
+<tr>
+<td>Issuer / Provider URL</td>
+<td><code>https://id.example.com</code></td>
+</tr>
+<tr>
+<td>Discovery URL</td>
+<td><code>https://id.example.com/.well-known/openid-configuration</code></td>
+</tr>
+<tr>
+<td>Scopes</td>
+<td><code>openid email profile</code> (add <code>groups</code> if the app maps groups)</td>
+</tr>
+</tbody>
+</table>
+<p>Some apps want each endpoint separately instead of a discovery URL:</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authorization</td>
+<td><code>https://id.example.com/authorize</code></td>
+</tr>
+<tr>
+<td>Token</td>
+<td><code>https://id.example.com/api/oidc/token</code></td>
+</tr>
+<tr>
+<td>Userinfo</td>
+<td><code>https://id.example.com/api/oidc/userinfo</code></td>
+</tr>
+<tr>
+<td>JWKS</td>
+<td><code>https://id.example.com/.well-known/jwks.json</code></td>
+</tr>
+</tbody>
+</table>
+<p>After changing environment variables, redeploy the stack.</p>
+<h2 id="step-5-match-your-existing-account" data-toc="2">Step 5 — Match your existing account</h2>
+<p>Do this before the first Pocket ID login, or the app creates a new, empty user.</p>
+<p>Each app links accounts in one of three ways:</p>
+<table>
+<thead>
+<tr>
+<th>App links by</th>
+<th>What must match</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Username</td>
+<td>Pocket ID username = app username (not the display name). Turn off any &quot;unique user id&quot; or &quot;provider prefix&quot; option, and map the username to <code>preferred_username</code>.</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>Pocket ID email = email on the app account</td>
+</tr>
+<tr>
+<td>Manual link on first login</td>
+<td>Nothing beforehand; choose &quot;Link to an existing account&quot; and enter the old password once</td>
+</tr>
+</tbody>
+</table>
+<p>If a duplicate user appears, check its real username (not the display name), fix the setting, delete the duplicate, and log in again.</p>
+<h2 id="step-6-test-then-lock-down-optional" data-toc="2">Step 6 — Test, then lock down (optional)</h2>
+<ol>
+<li>Keep your current admin session open.</li>
+<li>In a private window, log in with Pocket ID and confirm you land in your existing account.</li>
+<li>Only then, optionally hide the password form.</li>
+</ol>
+<p>Most apps have a setting or environment variable to hide the password form. Before turning it on, note the fallback: a direct-login URL, or removing the variable and redeploying.</p>
+<p>Keep a Pocket ID passkey on at least two devices. Git over HTTPS, browser extensions and mobile apps usually use access tokens, so they keep working.</p>
+<p>Sources: <a href="https://pocket-id.org/docs/setup/installation">Pocket ID docs</a>, <a href="https://pocket-id.org/docs/configuration/allowed-groups">Pocket ID allowed groups</a></p>
+
+    
+</div>
+
+<footer class="note-footer">
+    <a href='mailto:sigmarootpi@proton.me?subject=Blogentry: Deploy apps using Pocketid'>Reply via email</a>
+</footer>
+</article>
+
+
+
+
+<script>
+  // Contents: always open beside the text on wide screens, collapsed above it
+  // otherwise; highlight the section currently being read
+  (function () {
+    var details = document.querySelector(".toc-inner");
+    var wide = window.matchMedia("(min-width: 1340px)");
+    function sync() { details.open = wide.matches; }
+    sync();
+    wide.addEventListener("change", sync);
+
+    var links = {};
+    document.querySelectorAll(".toc a").forEach(function (a) { links[a.hash.slice(1)] = a; });
+    var targets = Object.keys(links).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    function update() {
+      var current = targets[0];
+      targets.forEach(function (t) { if (t.getBoundingClientRect().top < 120) current = t; });
+      Object.keys(links).forEach(function (id) { links[id].classList.toggle("active", current && id === current.id); });
+    }
+    document.addEventListener("scroll", update, { passive: true });
+    update();
+  })();
+</script>
+
+
+    </main>
+    <footer class="site-footer">
+    <p>contact me: sigmarootpi [at] proton [dot] me</p>
+    <p class="site-colophon">
+        Last built 24 Oct 2026, 18:27 UTC
+        · commit <a href="https://github.com/rishabhstein/git-11ty-notes/commit/cebb9840cf4abb4e300de27a12a88fbd56adbe23">cebb984</a>
+        · Powered by <a href="https://www.11ty.dev/">Eleventy</a>
+        · <a href="https://www.flaticon.com/free-icons/ascetic" title="ascetic icons">Ascetic icon from Flaticon</a>
+        <br>
+        © 2024–2026 Rishabh P. Sharma · Notes licensed under
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">CC BY-NC-SA 4.0</a>
+    </p>
+</footer>
+
+</body>
+</html>

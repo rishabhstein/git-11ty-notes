@@ -10,7 +10,6 @@ tags:
 
 Yet another inadequate place to put a topic seperate from its envelop term.
 
-# God
 It is important to first define what is God? The context of this word is [[Philosophy/religion]] where the meaning is different based on different religions. Starting from prehistoric era about which we know a very little, my best guess for the definition of God comes from animal, nature, life and death. In most of the cave paintings the common figures around the world are half human half beast forms. Fear of death and appreciation of live gives second candidate. The ancient burial ground indicates that there was some belief. Worshiping a figurine of a fertile woman, goddess of fertility, was also common practice. I found a similar figurine in a museum exhibition in Bulgaria where artifacts of ten thousand year old society were shown. They had only two Gods: fertile mother and Sun (priest) as father.
 
 _So does that mean older the religion, closer it will be to the nature or animals? Less human-centric?_

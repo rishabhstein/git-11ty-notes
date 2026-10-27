@@ -7,7 +7,7 @@ tags:
   - philosophy
 ---
 
-Although yoga is well known all over the world, its meaning is far from its original meaning. In ancient India, it refers to [[Philosophy/religion|spritual practices]].
+Although yoga is well known all over the world, its current meaning related to physical exercises is far from its original meaning [[Philosophy/religion|spritual practices]].
 
 - Bhakti Yoga
 - Janana Yoga
@@ -19,7 +19,9 @@ Although yoga is well known all over the world, its meaning is far from its orig
 - [[People/neem-karoli-baba|Neem Karoli Baba]]
 - [[People/nisargadatt-maharaja|Nisargadatt Maharaja]]
 - [[People/ramana-maharishi|Ramana Maharishi]]
-- [[People/vivekananda|Vivekananda]]
+- [[People/ramakrishna|Ramakrishna Paramhansa]]
+- [[People/anandmayi-maa|Anandamayi Maa]]
+- [[People/vivekananda|Swami Vivekananda]]
 
 ## Recommend
 - [*The Complete Book of Yoga: Karma Yoga, Bhakti Yoga, Raja Yoga, Jnana Yoga*](https://www.goodreads.com/book/show/48753986-complete-book-of-yoga) by Swami Vivekananda

@@ -6,6 +6,11 @@ date: Last Modified
 tags:
   - people
   - religion
+image: https://babaneebkarori.in/wp-content/uploads/2025/01/8977001-e1736188126901.webp
+image_caption: Portrait of Neem Karoli Baba
+info:
+  - "Religion: Hinduism"
+  - "Philosophy: Bhakti Yoga"
 ---
 
 One of the most revered guru (spiritual teacher) of [[Philosophy/yoga|Bhakti Yoga]] from northern India in last century. He considered himself (and referred himself many times to his devotees) an avatar of Hindu god, *Hanuman*, who is known for his devotion to *Lord Ram*. His primary teachings were based on *Adwait (Non-duality)* that all is part of one consiousness, [[Philosophy/religion|The God]].
@@ -19,14 +24,14 @@ Recently a movie, *Hanuman Ansh*, was released in Bollywood as a first part of t
 ## See Also
 - [[People/nisargadatt-maharaja|Nisargadatt Maharaja]]
 - [[People/ramana-maharishi|Ramana Maharishi]]
+- [[People/ramakrishna|Ramakrishna Paramhansa]]
+- [[People/anandmayi-maa|Anandamayi Maa]]
 - [[Philosophy/yoga|Yoga]]
-- 
-
-## To Read
-- [*Be Here Now*](https://www.goodreads.com/book/show/29254) by Ram Dass
-- [*Divine Detour: That Changed My Life*](https://www.amazon.in/Divine-Detour-Changed-Spiritual-Transformation/dp/9349262231) by Vishal Chaturvedi
 
 ## Recommend
 - [*Be Love Now: The Path of the Heart*](https://www.goodreads.com/book/show/10823185) by Ram Dass & Rameshwar Das
 - [*By His Grace: A Devotee's Story*](https://www.goodreads.com/book/show/549664) by Dada Mukerjee
 
+## To Read
+- [*Be Here Now*](https://www.goodreads.com/book/show/29254) by Ram Dass
+- [*Divine Detour: That Changed My Life*](https://www.amazon.in/Divine-Detour-Changed-Spiritual-Transformation/dp/9349262231) by Vishal Chaturvedi

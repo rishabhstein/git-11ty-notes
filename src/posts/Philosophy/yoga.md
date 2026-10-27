@@ -9,6 +9,12 @@ tags:
 
 Although yoga is well known all over the world, its meaning is far from its original meaning. In ancient India, it refers to [[Philosophy/religion|spritual practices]].
 
+- Bhakti Yoga
+- Janana Yoga
+- Raj Yoga
+- Karma Yoga
+
+
 ## See Also
 - [[People/neem-karoli-baba|Neem Karoli Baba]]
 - [[People/nisargadatt-maharaja|Nisargadatt Maharaja]]

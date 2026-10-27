@@ -22,3 +22,12 @@ A concept proposed by [[People/Richard-Dawkins]] in his book [[Selfish-gene]] ex
 
 **See Also:**
 - ok
+
+## Ideas
+Watching Einzelgangers video about [[Philosophy/parmenides]] I realized that western philosophy is like using thinking mind to analyze believes, which is weird.
+
+
+## Scientific Note
+Its a topic of basic Physics course in which the concepts of hydrostatic forces and pressure is introduced. 
+
+In a recent youtube video [Steve Mould](https://www.youtube.com/watch?v=U7NHNT3M-tw) showed some amazing tricks related to this topic, worth checking out.

@@ -8,9 +8,20 @@ tags:
   - physics
 ---
 
-Pattern formation in nature is a ubiquitous phenomenon which is observed in a variety of systems, with examples ranging from bacteria colony growth in biology to river networks and mineral dendrites in geology to Rayleigh-Taylor fingers observed in the Crab Nebula in cosmology. In geology, another example of pattern formation is dissolution patterns, which are the result of chemical erosion (dissolution) of carbonate rocks by a reactant. Dissolution is a highly non-linear process in which the interplay of flow, reaction and transport give rise to dissolution instabilities, which, in certain physical conditions, can evolve into distinct finger-like shapes. The figure below shows the dissolution fingers or solution pipes observed in Smerdyna, Poland (left) and Apuglia, Italy (middle panel). The right panel shows a wormhole in laboratory experiments. Note that the laboratory wormhole is only 11cm long compared to the natural patterns, whose size is in meters.
+Topic of my PhD thesis, so I should pretend to be an expert of it.
 
-<center>
-<img src="https://sigmarootpi.com/assets/mydata/disspattern.jpg" style="height: auto; width: 80%; object-fit: contain; alt=Dissolution patterns">
-</center>
+Chemical erosion (dissolution) of carbonate rocks can also result in fingering patterns, known as dissolution fingers or solution pipes. These pipes are observed in nature mostly at the latitude of 29 deg. 
 
+This is mystery to me why?
+
+Most fascinating thing about these patterns are the time scales and length scales they formed in. Geology is known to use thousands if not millions of years for evolution. So do these pipes which must![Solution pipes in Smerdyna Poland (left), Apuglia, Italy (right), and in laboratory experiments](https://rishabhps.com/assets/images/disspattern.jpg)have took at least thousands of years to evolve. In term of size, they can be upto fifteen meters long, and two-three meters wide.
+
+Petroleum engineers, when tried to study them in laboratory using fast dissolution (strong acid $\rm HCl$) of rocks, observed macro scale tree like patterns, which they call, wormholes—similar to holes made by worm in sand.
+
+
+
+## See Also:
+- [[Patterns/viscous-fingering]]
+- [[Patterns/precipitation-fingers]]
+- [[Patterns/convective-dissolution-fingers]]
+- [[Patterns/rtfingers]]

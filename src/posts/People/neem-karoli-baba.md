@@ -1,12 +1,12 @@
 ---
 title: "Neem Karoli Baba"
 cdate: 2026-10-22
-mdate: 2026-10-22T16:01
+mdate: 2026-10-27T14:15
 date: Last Modified
 tags:
   - people
   - religion
-image: https://babaneebkarori.in/wp-content/uploads/2025/01/8977001-e1736188126901.webp
+image: "2026-10-27-1793106897572-8977001-e1736188126901-copy.jpg"
 image_caption: Portrait of Neem Karoli Baba
 info:
   - "Religion: Hinduism"

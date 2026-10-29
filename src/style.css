@@ -95,6 +95,22 @@ body {
   font-size: var(--font-size-base);
 }
 
+/* Notes with a card (infobox or figure) use Wikipedia's (Vector 2022) article
+   width, so the text beside the card keeps a comfortable line length; notes
+   without one keep the 800px column */
+body:has(article.note :is(.infobox, .note-figure)) {
+  max-width: 59.25rem;
+}
+
+/* With the contents and bibliography columns showing (12.25rem + 24px gap each
+   side, like Wikipedia's contents column), the note narrows below ~1430px
+   to leave room for them */
+@media (min-width: 1340px) {
+  body:has(article.note :is(.infobox, .note-figure)) {
+    max-width: min(59.25rem, 100vw - 30rem);
+  }
+}
+
 
 /* Headers and typography */
 header {
@@ -1179,8 +1195,8 @@ a.doi::before {
     top: 0;
     bottom: 0;
     right: 100%;
-    width: 200px;
-    margin-right: 40px;
+    width: 12.25rem;
+    margin-right: 24px;
   }
 
   .toc-inner {
@@ -1336,8 +1352,8 @@ a.doi::before {
     top: 0;
     bottom: 0;
     left: 100%;
-    width: 260px;
-    margin-left: 40px;
+    width: 12.25rem;
+    margin-left: 24px;
   }
 
   .note-body .bibliography .refs-title {
